@@ -1,0 +1,38 @@
+﻿<Properties>
+  <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />
+  <MonoDevelop.Ide.Workbench ActiveDocument="World/Tests/SerializationTest.cs">
+    <Files>
+      <File FileName="World/World.cs" Line="80" Column="15" />
+      <File FileName="World/Tile/Implementations/AirTile.cs" Line="8" Column="2" />
+      <File FileName="World/Tile/Implementations/SandTile.cs" Line="10" Column="1" />
+      <File FileName="World/Tile/Implementations/GrassTile.cs" Line="10" Column="1" />
+      <File FileName="World/Tests/SerializationTest.cs" Line="18" Column="9" />
+    </Files>
+    <Pads>
+      <Pad Id="ProjectPad">
+        <State expanded="True">
+          <Node name="World" expanded="True" selected="True">
+            <Node name="References" expanded="True" />
+            <Node name="Tests" expanded="True" />
+          </Node>
+        </State>
+      </Pad>
+      <Pad Id="ClassPad">
+        <State expanded="True" selected="True" />
+      </Pad>
+      <Pad Id="MonoDevelop.Debugger.WatchPad">
+        <State />
+      </Pad>
+      <Pad Id="ConnectionManagerPad">
+        <State selected="True" />
+      </Pad>
+      <Pad Id="MonoDevelop.NUnit.TestPad">
+        <State expanded="True" selected="True" />
+      </Pad>
+    </Pads>
+  </MonoDevelop.Ide.Workbench>
+  <MonoDevelop.Ide.DebuggingService.Breakpoints>
+    <BreakpointStore />
+  </MonoDevelop.Ide.DebuggingService.Breakpoints>
+  <MonoDevelop.Ide.DebuggingService.PinnedWatches />
+</Properties>
