@@ -15,13 +15,9 @@ namespace World.Tile {
 
     public interface ITile {
         TileTypes TileType { get; }
-
         IList<IStaticEntity> StaticEntities { get; }
-
         int X { get; }
-
         int Y { get; }
-
         int Z { get; }
     }
 }

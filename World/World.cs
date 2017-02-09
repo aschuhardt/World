@@ -7,17 +7,11 @@ using System.Text;
 namespace World {
     public class World {
         public string Name { get; set; }
-
         public int Width { get; private set; }
-
         public int Height { get; private set; }
-
         public int Depth { get; private set; }
-
         public int SeaLevel { get; private set; }
-
         public int ShoreLine { get; private set; }
-
         public ITile[,,] Tiles { get; private set; }
 
         [JsonConstructor]
@@ -31,7 +25,7 @@ namespace World {
             this.GenerateTiles();
         }
 
-        public World(int width, int height, int depth, string name = "World") 
+        public World(int width, int height, int depth, string name = "World")
             : this(width, height, depth, depth / 2, (depth / 2) + (depth / 8), name) {
         }
 

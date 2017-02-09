@@ -7,8 +7,8 @@ namespace World {
     public class SerializationTest {
         string _worldName = "TestWorld";
         string _fileName = "TestWorld.json";
-        int _width = 16;
-        int _height = 16;
+        int _width = 64;
+        int _height = 64;
         int _depth = 16;
 
         [SetUp()]
