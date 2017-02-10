@@ -12,11 +12,8 @@ namespace World {
 
     public interface IDynamicEntity {
         DynamicEntityTypes EntityType { get; }
-
         int X { get; }
-
         int Y { get; }
-
         int Z { get; }
     }
 }

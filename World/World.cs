@@ -3,6 +3,8 @@ using World.Tile;
 using Newtonsoft.Json;
 using System.IO;
 using System.Text;
+using System.Collections.Generic;
+using System.Diagnostics;
 
 namespace World {
     public class World {
@@ -12,42 +14,92 @@ namespace World {
         public int Depth { get; private set; }
         public int SeaLevel { get; private set; }
         public int ShoreLine { get; private set; }
-        public ITile[,,] Tiles { get; private set; }
 
-        [JsonConstructor]
-        public World(int width, int height, int depth, int seaLevel, int shoreLine, string name = "World") {
+        [JsonIgnore]
+        public ITile[,,] Tiles { get; private set; }
+        
+        public ITile[] SerializedTileArray {
+            get {
+                List<ITile> tArr = new List<ITile>();
+                for (int x = 0; x < this.Width; x++) {
+                    for (int y = 0; y < this.Height; y++) {
+                        for (int z = 0; z < this.Depth; z++) {
+                            if (this.Tiles[x, y, z] != null) {
+                                ITile t = this.Tiles[x, y, z];
+
+                                //let's save on file size by not serializing empty air tiles
+                                if (t.TileType != TileTypes.Air || t.StaticEntities.Count > 0) {
+                                    tArr.Add(this.Tiles[x, y, z]);
+                                }
+                            }
+                        }
+                    }
+                }
+                return tArr.ToArray();
+            }
+            set {
+                foreach (ITile t in value) {
+                    this.SetTileAtLocation(t, t.X, t.Y, t.Z);
+                }
+                this.FillNullTilesWithAir();
+            }
+        }
+        
+        public World(int width, int height, int depth, int seaLevel, int shoreLine, string name = "World", bool generate = true) {
             this.Width = width;
             this.Height = height;
             this.Depth = depth;
             this.Name = name;
             this.SeaLevel = seaLevel;
             this.ShoreLine = shoreLine;
-            this.GenerateTiles();
+            this.Tiles = new ITile[this.Width, this.Height, this.Depth];
+            if (generate) this.GenerateTiles();
         }
 
-        public World(int width, int height, int depth, string name = "World")
-            : this(width, height, depth, depth / 2, (depth / 2) + (depth / 8), name) {
+        /// <summary>
+        /// Generates a world without generating tiles by default.  Don't use this, this is just for the JSON serializer.
+        /// </summary>
+        [JsonConstructor]
+        public World(int width, int height, int depth, int seaLevel, int shoreLine, string name)
+            : this(width, height, depth, seaLevel, shoreLine, name, false) {
+        }
+
+        public World(int width, int height, int depth, string name = "World", bool generate = true)
+            : this(width, height, depth, depth / 2, (depth / 2) + (depth / 8), name, generate) {
         }
 
         public ITile GetTileForDynamicEntity(IDynamicEntity ent) {
             return this.Tiles[ent.X, ent.Y, ent.Z];
         }
 
+        public void SetTileAtLocation(ITile t, int x, int y, int z) {
+            this.Tiles[x, y, z] = t;
+        }
+
         public void Save(string outputDirectory) {
-            string json = JsonConvert.SerializeObject(this, Formatting.Indented);
+            Stopwatch sw = new Stopwatch();
+            sw.Start();
+
+            string json = JsonConvert.SerializeObject(this, World.GetJSONSettings());
             string filename = string.Format("{0}.json", this.Name);
             string path = Path.Combine(outputDirectory, filename);
-            StreamWriter sw = new StreamWriter(path, false, Encoding.UTF8);
+            StreamWriter strmWriter = new StreamWriter(path, false, Encoding.UTF8);
             try {
-                sw.Write(json);
+                strmWriter.Write(json);
             } catch (Exception ex) {
                 throw ex;
             } finally {
-                sw.Close();
+                strmWriter.Close();
             }
+
+            sw.Stop();
+            Console.WriteLine("Serialization time: {0} ticks, {1} ms.", sw.ElapsedTicks, sw.ElapsedMilliseconds);
         }
 
         public static World LoadFromFile(string filePath) {
+            Stopwatch sw = new Stopwatch();
+            sw.Start();
+
             StreamReader sr = new StreamReader(filePath, Encoding.UTF8);
             string json = "";
             try {
@@ -57,11 +109,41 @@ namespace World {
             } finally {
                 sr.Close();
             }
-            return (World)JsonConvert.DeserializeObject(json, typeof(World));
+            World loaded = (World)JsonConvert.DeserializeObject(json, typeof(World), World.GetJSONSettings());
+
+            sw.Stop();
+            Console.WriteLine("Deserialization time: {0} ticks, {1} ms.", sw.ElapsedTicks, sw.ElapsedMilliseconds);
+
+            return loaded;
+        }
+
+        private int FillNullTilesWithAir() {
+            Stopwatch sw = new Stopwatch();
+            sw.Start();
+
+            int count = 0;
+            for (int x = 0; x < this.Width; x++) {
+                for (int y = 0; y < this.Height; y++) {
+                    for (int z = 0; z < this.Depth; z++) {
+                        if (this.Tiles[x, y, z] == null) {
+                            count++;
+                            ITile t = new AirTile(x, y, z);
+                            this.SetTileAtLocation(t, t.X, t.Y, t.Z);
+                        }
+                    }
+                }
+            }
+            Console.WriteLine($"{count} null tiles replaced with air.");
+
+            sw.Stop();
+            Console.WriteLine("Air-fill time: {0} ticks, {1} ms.", sw.ElapsedTicks, sw.ElapsedMilliseconds);
+
+            return count;
         }
 
         private void GenerateTiles() {
-            this.Tiles = new ITile[this.Width, this.Height, this.Depth];
+            Stopwatch sw = new Stopwatch();
+            sw.Start();
 
             //generate a 2D plane representing the contours of the landscape
             double[,] landscapePlane = this.GenerateLandscapePlane();
@@ -92,16 +174,33 @@ namespace World {
                     }
                 }
             }
+
+            sw.Stop();
+            Console.WriteLine("Landscape generation time: {0} ticks, {1} ms.", sw.ElapsedTicks, sw.ElapsedMilliseconds);
         }
 
         private double[,] GenerateLandscapePlane() {
+            Stopwatch sw = new Stopwatch();
+            sw.Start();
+
             double[,] landscapePlane = new double[this.Width, this.Height];
             for (int x = 0; x < this.Width; x++) {
                 for (int y = 0; y < this.Height; y++) {
                     landscapePlane[x, y] = (Math.Sin(x * 0.06) * Math.Sin(y * 0.06)) * this.Depth;
                 }
             }
+
+            sw.Stop();
+            Console.WriteLine("Plane calculation time: {0} ticks, {1} ms.", sw.ElapsedTicks, sw.ElapsedMilliseconds);
+
             return landscapePlane;
+        }
+
+        private static JsonSerializerSettings GetJSONSettings() {
+            return new JsonSerializerSettings() {
+                TypeNameHandling = TypeNameHandling.Objects,
+                Formatting = Formatting.None,
+            };
         }
     }
 }
