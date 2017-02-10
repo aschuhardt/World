@@ -3,12 +3,13 @@ using System.Collections.Generic;
 using World.StaticEntity;
 
 namespace World.Tile {
-    public class TileBase : ITile {
+    public abstract class TileBase : ITile {
         private TileTypes _tileType;
         private IList<IStaticEntity> _staticEntities;
         private int _x;
         private int _y;
         private int _z;
+
         #region ITile implementation
         public TileTypes TileType {
             get {
@@ -40,12 +41,21 @@ namespace World.Tile {
             }
         }
         #endregion
+
         public TileBase(int x, int y, int z, TileTypes tileType = TileTypes.Air) {
             _x = x;
             _y = y;
             _z = z;
             _tileType = tileType;
             _staticEntities = new List<IStaticEntity>();
+        }
+
+        public bool ShouldSerializeStaticEntities() {
+            return this.StaticEntities.Count > 0;
+        }
+
+        public bool ShouldSerializeTileBase() {
+            return this.StaticEntities.Count > 0 || this.TileType != TileTypes.Air;
         }
     }
 }

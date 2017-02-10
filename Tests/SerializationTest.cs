@@ -1,24 +1,25 @@
 using NUnit.Framework;
-using System;
 using System.IO;
-using System.Collections.Generic;
-using System.Linq;
-using World.Tile;
+using BitmapRenderer;
 
 namespace World {
     [TestFixture()]
     public class SerializationTest {
         string _worldName = "TestWorld";
         string _fileName = "TestWorld.json";
-        int _width = 32;
-        int _height = 32;
-        int _depth = 4;
+        int _width = 128;
+        int _height = 128;
+        int _depth = 16;
 
         World _baseWorld;
 
         [SetUp()]
         public void Setup() {
             _baseWorld = new World(_width, _height, _depth, _worldName);
+
+            //save a bitmap render because why not
+            WorldMapRenderer.RenderTopDownMap(_baseWorld, "map_depth.bmp", WorldMapRenderer.RenderStyles.Depth, true);
+            WorldMapRenderer.RenderTopDownMap(_baseWorld, "map_type.bmp", WorldMapRenderer.RenderStyles.TileType, true);
 
             _baseWorld.Save("./");
         }

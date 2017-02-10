@@ -26,11 +26,7 @@ namespace World {
                         for (int z = 0; z < this.Depth; z++) {
                             if (this.Tiles[x, y, z] != null) {
                                 ITile t = this.Tiles[x, y, z];
-
-                                //let's save on file size by not serializing empty air tiles
-                                if (t.TileType != TileTypes.Air || t.StaticEntities.Count > 0) {
-                                    tArr.Add(this.Tiles[x, y, z]);
-                                }
+                                tArr.Add(this.Tiles[x, y, z]);
                             }
                         }
                     }
@@ -186,7 +182,7 @@ namespace World {
             double[,] landscapePlane = new double[this.Width, this.Height];
             for (int x = 0; x < this.Width; x++) {
                 for (int y = 0; y < this.Height; y++) {
-                    landscapePlane[x, y] = (Math.Sin(x * 0.06) * Math.Sin(y * 0.06)) * this.Depth;
+                    landscapePlane[x, y] = ((Math.Sin(x * 0.05) * Math.Sin(y * 0.05)) * (this.Depth / 2)) + (this.Depth / 2);
                 }
             }
 
