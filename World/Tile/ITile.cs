@@ -1,3 +1,4 @@
+using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using World.StaticEntity;
@@ -7,18 +8,17 @@ namespace World.Tile {
         Air,
         Water,
         Grass,
-        Stone,
-        Dirt,
-        Ice,
         Sand
     }
 
     public interface ITile {
         TileTypes TileType { get; }
         IList<IStaticEntity> StaticEntities { get; }
-        int X { get; }
-        int Y { get; }
-        int Z { get; }
+        int X { get; set; }
+        int Y { get; set; }
+        int Z { get; set; }
+        [JsonIgnore]
+        string Serialized { get; }
     }
 }
 

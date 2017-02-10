@@ -17,7 +17,7 @@ namespace World {
 
         [JsonIgnore]
         public ITile[,,] Tiles { get; private set; }
-        
+
         public ITile[] SerializedTileArray {
             get {
                 List<ITile> tArr = new List<ITile>();
@@ -40,7 +40,7 @@ namespace World {
                 this.FillNullTilesWithAir();
             }
         }
-        
+
         public World(int width, int height, int depth, int seaLevel, int shoreLine, string name = "World", bool generate = true) {
             this.Width = width;
             this.Height = height;
@@ -76,36 +76,29 @@ namespace World {
             Stopwatch sw = new Stopwatch();
             sw.Start();
 
-            string json = JsonConvert.SerializeObject(this, World.GetJSONSettings());
-            string filename = string.Format("{0}.json", this.Name);
-            string path = Path.Combine(outputDirectory, filename);
-            StreamWriter strmWriter = new StreamWriter(path, false, Encoding.UTF8);
             try {
-                strmWriter.Write(json);
+                MapSerializer.SerializeWorldMap(this, outputDirectory);
             } catch (Exception ex) {
-                throw ex;
-            } finally {
-                strmWriter.Close();
+                Console.WriteLine($"Error while serializing map object: {ex.Message}; {ex.StackTrace}");
+                throw;
             }
 
             sw.Stop();
             Console.WriteLine("Serialization time: {0} ticks, {1} ms.", sw.ElapsedTicks, sw.ElapsedMilliseconds);
         }
 
-        public static World LoadFromFile(string filePath) {
+        public static World LoadFromFile(string filename) {
             Stopwatch sw = new Stopwatch();
             sw.Start();
 
-            StreamReader sr = new StreamReader(filePath, Encoding.UTF8);
-            string json = "";
+            World loaded;
+
             try {
-                json = sr.ReadToEnd();
+                loaded = MapSerializer.DeserializeWorldMap(filename);
             } catch (Exception ex) {
-                throw ex;
-            } finally {
-                sr.Close();
+                Console.WriteLine($"Error while deserializing map object: {ex.Message}; {ex.StackTrace}");
+                throw;
             }
-            World loaded = (World)JsonConvert.DeserializeObject(json, typeof(World), World.GetJSONSettings());
 
             sw.Stop();
             Console.WriteLine("Deserialization time: {0} ticks, {1} ms.", sw.ElapsedTicks, sw.ElapsedMilliseconds);
@@ -113,7 +106,7 @@ namespace World {
             return loaded;
         }
 
-        private int FillNullTilesWithAir() {
+        internal int FillNullTilesWithAir() {
             Stopwatch sw = new Stopwatch();
             sw.Start();
 
@@ -194,7 +187,7 @@ namespace World {
 
         private static JsonSerializerSettings GetJSONSettings() {
             return new JsonSerializerSettings() {
-                TypeNameHandling = TypeNameHandling.Objects,
+                TypeNameHandling = TypeNameHandling.None,
                 Formatting = Formatting.None,
             };
         }

@@ -56,12 +56,6 @@ namespace BitmapRenderer {
                     return Color.Blue;
                 case TileTypes.Grass:
                     return Color.Green;
-                case TileTypes.Stone:
-                    return Color.Gray;
-                case TileTypes.Dirt:
-                    return Color.Brown;
-                case TileTypes.Ice:
-                    return Color.LightBlue;
                 case TileTypes.Sand:
                     return Color.Yellow;
                 default:

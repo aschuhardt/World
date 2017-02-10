@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Text;
 using World.StaticEntity;
 
 namespace World.Tile {
@@ -27,17 +28,39 @@ namespace World.Tile {
             get {
                 return _x;
             }
+            set {
+                _x = value;
+            }
         }
 
         public int Y {
             get {
                 return _y;
             }
+            set {
+                _y = value;
+            }
         }
 
         public int Z {
             get {
                 return _z;
+            }
+            set {
+                _z = value;
+            }
+        }
+
+        public virtual string Serialized {
+            get {
+                var sb = new StringBuilder();
+                sb.Append("{ ");
+                sb.AppendFormat("\"TileType\": {0},", (int)this.TileType);
+                sb.AppendFormat("\"X\": {0},", (int)this.X);
+                sb.AppendFormat("\"Y\": {0},", (int)this.Y);
+                sb.AppendFormat("\"Z\": {0}", (int)this.Z);
+                sb.Append(" }");
+                return sb.ToString();
             }
         }
         #endregion
@@ -50,12 +73,12 @@ namespace World.Tile {
             _staticEntities = new List<IStaticEntity>();
         }
 
-        public bool ShouldSerializeStaticEntities() {
-            return this.StaticEntities.Count > 0;
-        }
-
-        public bool ShouldSerializeTileBase() {
-            return this.StaticEntities.Count > 0 || this.TileType != TileTypes.Air;
+        public TileBase(TileTypes t) {
+            _x = 0;
+            _y = 0;
+            _z = 0;
+            _tileType = t;
+            _staticEntities = new List<IStaticEntity>();
         }
     }
 }

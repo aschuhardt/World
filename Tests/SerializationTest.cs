@@ -7,9 +7,9 @@ namespace World {
     public class SerializationTest {
         string _worldName = "TestWorld";
         string _fileName = "TestWorld.json";
-        int _width = 128;
-        int _height = 128;
-        int _depth = 16;
+        int _width = 512;
+        int _height = 512;
+        int _depth = 64;
 
         World _baseWorld;
 
@@ -19,7 +19,7 @@ namespace World {
 
             //save a bitmap render because why not
             WorldMapRenderer.RenderTopDownMap(_baseWorld, "map_depth.bmp", WorldMapRenderer.RenderStyles.Depth, true);
-            WorldMapRenderer.RenderTopDownMap(_baseWorld, "map_type.bmp", WorldMapRenderer.RenderStyles.TileType, true);
+            WorldMapRenderer.RenderTopDownMap(_baseWorld, "map_type.bmp", WorldMapRenderer.RenderStyles.TileType, false);
 
             _baseWorld.Save("./");
         }
