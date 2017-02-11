@@ -1,13 +1,16 @@
 using System;
 using World.Tile;
 using Newtonsoft.Json;
-using System.IO;
-using System.Text;
 using System.Collections.Generic;
 using System.Diagnostics;
 
 namespace World {
     public class World {
+        public const double DEFAULT_X_OFFSET = 0.01;
+        public const double DEFAULT_Y_OFFSET = 0.01;
+        public const double DEFAULT_X_OFFSET_COEF = 1;
+        public const double DEFAULT_Y_OFFSET_COEF = 1;
+
         public string Name { get; set; }
         public int Width { get; private set; }
         public int Height { get; private set; }
@@ -49,13 +52,12 @@ namespace World {
             this.SeaLevel = seaLevel;
             this.ShoreLine = shoreLine;
             this.Tiles = new ITile[this.Width, this.Height, this.Depth];
-            if (generate) this.GenerateTiles();
+            if (generate) this.GenerateTiles(DEFAULT_X_OFFSET, DEFAULT_Y_OFFSET, DEFAULT_X_OFFSET_COEF, DEFAULT_Y_OFFSET_COEF);
         }
 
         /// <summary>
         /// Generates a world without generating tiles by default.  Don't use this, this is just for the JSON serializer.
         /// </summary>
-        [JsonConstructor]
         public World(int width, int height, int depth, int seaLevel, int shoreLine, string name)
             : this(width, height, depth, seaLevel, shoreLine, name, false) {
         }
@@ -130,12 +132,12 @@ namespace World {
             return count;
         }
 
-        private void GenerateTiles() {
+        private void GenerateTiles(double offsetX, double offsetY, double offsetXCoeficient, double offsetYCoeficient) {
             Stopwatch sw = new Stopwatch();
             sw.Start();
 
             //generate a 2D plane representing the contours of the landscape
-            double[,] landscapePlane = this.GenerateLandscapePlane();
+            double[,] landscapePlane = this.GenerateLandscapePlane(offsetX, offsetY, offsetXCoeficient, offsetYCoeficient);
 
             for (int x = 0; x < this.Width; x++) {
                 for (int y = 0; y < this.Height; y++) {
@@ -168,14 +170,16 @@ namespace World {
             Console.WriteLine("Landscape generation time: {0} ticks, {1} ms.", sw.ElapsedTicks, sw.ElapsedMilliseconds);
         }
 
-        private double[,] GenerateLandscapePlane() {
+        private double[,] GenerateLandscapePlane(double offsetX, double offsetY, double offsetXCoeficient, double offsetYCoeficient) {
             Stopwatch sw = new Stopwatch();
             sw.Start();
 
             double[,] landscapePlane = new double[this.Width, this.Height];
             for (int x = 0; x < this.Width; x++) {
                 for (int y = 0; y < this.Height; y++) {
-                    landscapePlane[x, y] = ((Math.Sin(x * 0.05) * Math.Sin(y * 0.05)) * (this.Depth / 2)) + (this.Depth / 2);
+                    landscapePlane[x, y] = (((Math.Sin(x * offsetX) + (offsetX * offsetXCoeficient)) 
+                                           * (Math.Sin(y * offsetY) + (offsetY * offsetYCoeficient))) 
+                                           * (this.Depth / 2)) + (this.Depth / 2);
                 }
             }
 
@@ -183,13 +187,6 @@ namespace World {
             Console.WriteLine("Plane calculation time: {0} ticks, {1} ms.", sw.ElapsedTicks, sw.ElapsedMilliseconds);
 
             return landscapePlane;
-        }
-
-        private static JsonSerializerSettings GetJSONSettings() {
-            return new JsonSerializerSettings() {
-                TypeNameHandling = TypeNameHandling.None,
-                Formatting = Formatting.None,
-            };
         }
     }
 }

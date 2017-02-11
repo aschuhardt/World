@@ -7,8 +7,8 @@ namespace World {
     public class SerializationTest {
         string _worldName = "TestWorld";
         string _fileName = "TestWorld.json";
-        int _width = 512;
-        int _height = 512;
+        int _width = 256;
+        int _height = 256;
         int _depth = 64;
 
         World _baseWorld;
@@ -20,6 +20,12 @@ namespace World {
             //save a bitmap render because why not
             WorldMapRenderer.RenderTopDownMap(_baseWorld, "map_depth.bmp", WorldMapRenderer.RenderStyles.Depth, true);
             WorldMapRenderer.RenderTopDownMap(_baseWorld, "map_type.bmp", WorldMapRenderer.RenderStyles.TileType, false);
+            WorldMapRenderer.RenderCrossSectionMap(_baseWorld, "map_slice_x_type.bmp", _height / 2, WorldMapRenderer.RenderStyles.TileType, WorldMapRenderer.CrossSectionAxis.XAxis);
+            WorldMapRenderer.RenderCrossSectionMap(_baseWorld, "map_slice_x_depth.bmp", _height / 2, WorldMapRenderer.RenderStyles.Depth, WorldMapRenderer.CrossSectionAxis.XAxis);
+            WorldMapRenderer.RenderCrossSectionMap(_baseWorld, "map_slice_y_type.bmp", _width / 2, WorldMapRenderer.RenderStyles.TileType, WorldMapRenderer.CrossSectionAxis.YAxis);
+            WorldMapRenderer.RenderCrossSectionMap(_baseWorld, "map_slice_y_depth.bmp", _width / 2, WorldMapRenderer.RenderStyles.Depth, WorldMapRenderer.CrossSectionAxis.YAxis);
+            WorldMapRenderer.RenderCrossSectionMap(_baseWorld, "map_slice_z_type.bmp", _depth / 2, WorldMapRenderer.RenderStyles.TileType, WorldMapRenderer.CrossSectionAxis.ZAxis);
+            WorldMapRenderer.RenderCrossSectionMap(_baseWorld, "map_slice_z_depth.bmp", _depth / 2, WorldMapRenderer.RenderStyles.Depth, WorldMapRenderer.CrossSectionAxis.ZAxis);
 
             _baseWorld.Save("./");
         }

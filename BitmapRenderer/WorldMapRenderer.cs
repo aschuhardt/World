@@ -1,9 +1,16 @@
 ﻿using System;
 using System.Drawing;
 using World.Tile;
+using System.Threading.Tasks;
 
 namespace BitmapRenderer {
     public static class WorldMapRenderer {
+        public enum CrossSectionAxis {
+            XAxis,
+            YAxis,
+            ZAxis
+        }
+
         public enum RenderStyles {
             Depth,
             TileType
@@ -18,12 +25,58 @@ namespace BitmapRenderer {
                     //ray-cast downward until we hit something that isn't air
                     for (int z = map.Depth - 1; z > 0; z--) {
                         ITile tile = map.Tiles[x, y, z];
-                        if (tile.TileType != TileTypes.Air 
+                        if (tile.TileType != TileTypes.Air
                             && (tile.TileType != TileTypes.Water || !occludeWater)) {
                             bmp.SetPixel(x, y, WorldMapRenderer.MapTileToColor(tile, style, map.Depth));
                             break;
                         }
                     }
+                }
+            }
+
+            bmp.Save(filename);
+        }
+
+        public static void RenderCrossSectionMap(World.World map, string filename, int plane, RenderStyles style, CrossSectionAxis axis) {
+            Bitmap bmp;
+
+            ITile[,] renderPlane;
+
+            switch (axis) {
+                case CrossSectionAxis.XAxis:
+                    bmp = new Bitmap(map.Width, map.Depth);
+                    renderPlane = new ITile[map.Width, map.Depth]; //[X, Z]
+                    for (int x = 0; x < map.Width; x++) {
+                        for (int z = 0; z < map.Depth; z++) {
+                            renderPlane[x, z] = map.Tiles[x, plane, z];
+                        }
+                    }
+                    break;
+                case CrossSectionAxis.YAxis:
+                    bmp = new Bitmap(map.Height, map.Depth);
+                    renderPlane = new ITile[map.Height, map.Depth]; //[Y, Z]
+                    for (int y = 0; y < map.Height; y++) {
+                        for (int z = 0; z < map.Depth; z++) {
+                            renderPlane[y, z] = map.Tiles[plane, y, z];
+                        }
+                    }
+                    break;
+                case CrossSectionAxis.ZAxis:
+                    bmp = new Bitmap(map.Width, map.Height);
+                    renderPlane = new ITile[map.Width, map.Height]; //[X, Y]
+                    for (int x = 0; x < map.Width; x++) {
+                        for (int y = 0; y < map.Height; y++) {
+                            renderPlane[x, y] = map.Tiles[x, y, plane];
+                        }
+                    }
+                    break;
+                default:
+                    throw new Exception($"Unrecognized axis {axis.ToString()}!");
+            }
+
+            for (int x = 0; x < bmp.Width; x++) {
+                for (int y = 0; y < bmp.Height; y++) {
+                    bmp.SetPixel(x, y, MapTileToColor(renderPlane[x, y], style, map.Depth));
                 }
             }
 
