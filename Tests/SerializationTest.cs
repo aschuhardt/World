@@ -18,8 +18,8 @@ namespace World {
             _baseWorld = new World(_width, _height, _depth, _worldName);
 
             //save a bitmap render because why not
-            WorldMapRenderer.RenderTopDownMap(_baseWorld, "map_depth.bmp", WorldMapRenderer.RenderStyles.Depth, true);
-            WorldMapRenderer.RenderTopDownMap(_baseWorld, "map_type.bmp", WorldMapRenderer.RenderStyles.TileType, false);
+            WorldMapRenderer.SaveRenderedTopDownMap(_baseWorld, "map_depth.bmp", WorldMapRenderer.RenderStyles.Depth, true);
+            WorldMapRenderer.SaveRenderedTopDownMap(_baseWorld, "map_type.bmp", WorldMapRenderer.RenderStyles.TileType, false);
             WorldMapRenderer.RenderCrossSectionMap(_baseWorld, "map_slice_x_type.bmp", _height / 2, WorldMapRenderer.RenderStyles.TileType, WorldMapRenderer.CrossSectionAxis.XAxis);
             WorldMapRenderer.RenderCrossSectionMap(_baseWorld, "map_slice_x_depth.bmp", _height / 2, WorldMapRenderer.RenderStyles.Depth, WorldMapRenderer.CrossSectionAxis.XAxis);
             WorldMapRenderer.RenderCrossSectionMap(_baseWorld, "map_slice_y_type.bmp", _width / 2, WorldMapRenderer.RenderStyles.TileType, WorldMapRenderer.CrossSectionAxis.YAxis);

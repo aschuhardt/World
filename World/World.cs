@@ -12,11 +12,11 @@ namespace World {
         public const double DEFAULT_Y_OFFSET_COEF = 1;
 
         public string Name { get; set; }
-        public int Width { get; private set; }
-        public int Height { get; private set; }
-        public int Depth { get; private set; }
-        public int SeaLevel { get; private set; }
-        public int ShoreLine { get; private set; }
+        public int Width { get; set; }
+        public int Height { get; set; }
+        public int Depth { get; set; }
+        public int SeaLevel { get; set; }
+        public int ShoreLine { get; set; }
 
         [JsonIgnore]
         public ITile[,,] Tiles { get; private set; }
@@ -132,9 +132,12 @@ namespace World {
             return count;
         }
 
-        private void GenerateTiles(double offsetX, double offsetY, double offsetXCoeficient, double offsetYCoeficient) {
+        public void GenerateTiles(double offsetX, double offsetY, double offsetXCoeficient, double offsetYCoeficient) {
             Stopwatch sw = new Stopwatch();
             sw.Start();
+            
+            //reinitialize array
+            this.Tiles = new ITile[this.Width, this.Height, this.Depth];
 
             //generate a 2D plane representing the contours of the landscape
             double[,] landscapePlane = this.GenerateLandscapePlane(offsetX, offsetY, offsetXCoeficient, offsetYCoeficient);
@@ -177,8 +180,8 @@ namespace World {
             double[,] landscapePlane = new double[this.Width, this.Height];
             for (int x = 0; x < this.Width; x++) {
                 for (int y = 0; y < this.Height; y++) {
-                    landscapePlane[x, y] = (((Math.Sin(x * offsetX) + (offsetX * offsetXCoeficient)) 
-                                           * (Math.Sin(y * offsetY) + (offsetY * offsetYCoeficient))) 
+                    landscapePlane[x, y] = (((Math.Sin(x * offsetX) + (offsetX * offsetXCoeficient))
+                                           * (Math.Sin(y * offsetY) + (offsetY * offsetYCoeficient)))
                                            * (this.Depth / 2)) + (this.Depth / 2);
                 }
             }

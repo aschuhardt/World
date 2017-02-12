@@ -4,3 +4,10 @@ C:\Users\aschuhardt\Desktop\World\World\bin\Debug\Newtonsoft.Json.dll
 C:\Users\aschuhardt\Desktop\World\World\obj\Debug\World.dll
 C:\Users\aschuhardt\Desktop\World\World\obj\Debug\World.pdb
 C:\Users\aschuhardt\Desktop\World\World\obj\Debug\World.csprojResolveAssemblyReference.cache
+C:\Users\aschuhardt\Documents\GitHub\World\World\bin\Debug\World.dll
+C:\Users\aschuhardt\Documents\GitHub\World\World\bin\Debug\World.pdb
+C:\Users\aschuhardt\Documents\GitHub\World\World\bin\Debug\Newtonsoft.Json.dll
+C:\Users\aschuhardt\Documents\GitHub\World\World\bin\Debug\Newtonsoft.Json.xml
+C:\Users\aschuhardt\Documents\GitHub\World\World\obj\Debug\World.csprojResolveAssemblyReference.cache
+C:\Users\aschuhardt\Documents\GitHub\World\World\obj\Debug\World.dll
+C:\Users\aschuhardt\Documents\GitHub\World\World\obj\Debug\World.pdb

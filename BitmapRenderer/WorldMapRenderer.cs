@@ -16,7 +16,7 @@ namespace BitmapRenderer {
             TileType
         }
 
-        public static void RenderTopDownMap(World.World map, string filename, RenderStyles style, bool occludeWater = false) {
+        public static Bitmap RenderTopDownMap(World.World map, RenderStyles style, bool occludeWater = false) {
             Bitmap bmp = new Bitmap(map.Width, map.Height);
 
             for (int x = 0; x < map.Width; x++) {
@@ -34,6 +34,11 @@ namespace BitmapRenderer {
                 }
             }
 
+            return bmp;
+        }
+
+        public static void SaveRenderedTopDownMap(World.World map, string filename, RenderStyles style, bool occludeWater = false) {
+            Bitmap bmp = WorldMapRenderer.RenderTopDownMap(map, style, occludeWater);
             bmp.Save(filename);
         }
 
