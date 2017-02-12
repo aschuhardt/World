@@ -37,16 +37,31 @@ namespace Visualizer {
         }
 
         private void Form1_Load(object sender, EventArgs e) {
+            setBindings();
+        }
+
+        private void setBindings() {
+            nudWidth.DataBindings.Clear();
             nudWidth.DataBindings.Add("Value", _worldVM, "Width", true, DataSourceUpdateMode.OnPropertyChanged);
+            nudHeight.DataBindings.Clear();
             nudHeight.DataBindings.Add("Value", _worldVM, "Height", true, DataSourceUpdateMode.OnPropertyChanged);
+            nudDepth.DataBindings.Clear();
             nudDepth.DataBindings.Add("Value", _worldVM, "Depth", true, DataSourceUpdateMode.OnPropertyChanged);
+            nudSeaLevel.DataBindings.Clear();
             nudSeaLevel.DataBindings.Add("Value", _worldVM, "SeaLevel", true, DataSourceUpdateMode.OnPropertyChanged);
+            nudShoreLine.DataBindings.Clear();
             nudShoreLine.DataBindings.Add("Value", _worldVM, "ShoreLine", true, DataSourceUpdateMode.OnPropertyChanged);
+            nudXOffset.DataBindings.Clear();
             nudXOffset.DataBindings.Add("Value", _worldVM, "XOffset", true, DataSourceUpdateMode.OnPropertyChanged);
+            nudXCoef.DataBindings.Clear();
             nudXCoef.DataBindings.Add("Value", _worldVM, "XOffsetCoefficient", true, DataSourceUpdateMode.OnPropertyChanged);
+            nudYOffset.DataBindings.Clear();
             nudYOffset.DataBindings.Add("Value", _worldVM, "YOffset", true, DataSourceUpdateMode.OnPropertyChanged);
+            nudYCoef.DataBindings.Clear();
             nudYCoef.DataBindings.Add("Value", _worldVM, "YOffsetCoefficient", true, DataSourceUpdateMode.OnPropertyChanged);
+            cbOccludeWater.DataBindings.Clear();
             cbOccludeWater.DataBindings.Add("Checked", _worldVM, "OccludeWater", true, DataSourceUpdateMode.OnPropertyChanged);
+            refreshRender();
         }
 
         private void btnExport_Click(object sender, EventArgs e) {
@@ -79,6 +94,7 @@ namespace Visualizer {
                 World.World newWorld = _worldVM.Load(path);
                 _worldVM = new WorldBindingSource(newWorld);
                 Cursor = Cursors.Default;
+                setBindings();
                 refreshRender();
             }
         }
