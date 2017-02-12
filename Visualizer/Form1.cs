@@ -51,14 +51,16 @@ namespace Visualizer {
             nudSeaLevel.DataBindings.Add("Value", _worldVM, "SeaLevel", true, DataSourceUpdateMode.OnPropertyChanged);
             nudShoreLine.DataBindings.Clear();
             nudShoreLine.DataBindings.Add("Value", _worldVM, "ShoreLine", true, DataSourceUpdateMode.OnPropertyChanged);
-            nudXOffset.DataBindings.Clear();
-            nudXOffset.DataBindings.Add("Value", _worldVM, "XOffset", true, DataSourceUpdateMode.OnPropertyChanged);
-            nudXCoef.DataBindings.Clear();
-            nudXCoef.DataBindings.Add("Value", _worldVM, "XOffsetCoefficient", true, DataSourceUpdateMode.OnPropertyChanged);
-            nudYOffset.DataBindings.Clear();
-            nudYOffset.DataBindings.Add("Value", _worldVM, "YOffset", true, DataSourceUpdateMode.OnPropertyChanged);
-            nudYCoef.DataBindings.Clear();
-            nudYCoef.DataBindings.Add("Value", _worldVM, "YOffsetCoefficient", true, DataSourceUpdateMode.OnPropertyChanged);
+
+            nudScaleX.DataBindings.Clear();
+            nudScaleX.DataBindings.Add("Value", _worldVM, "ScaleX", true, DataSourceUpdateMode.OnPropertyChanged);
+
+            nudScaleY.DataBindings.Clear();
+            nudScaleY.DataBindings.Add("Value", _worldVM, "ScaleY", true, DataSourceUpdateMode.OnPropertyChanged);
+
+            nudSeed.DataBindings.Clear();
+            nudSeed.DataBindings.Add("Value", _worldVM, "Seed", true, DataSourceUpdateMode.OnPropertyChanged);
+
             cbOccludeWater.DataBindings.Clear();
             cbOccludeWater.DataBindings.Add("Checked", _worldVM, "OccludeWater", true, DataSourceUpdateMode.OnPropertyChanged);
             refreshRender();
@@ -103,6 +105,10 @@ namespace Visualizer {
             Cursor = Cursors.WaitCursor;
             pbRender.Image = _worldVM.RenderedImage;
             Cursor = Cursors.Default;
+        }
+
+        private void btnRandomSeed_Click(object sender, EventArgs e) {
+            nudSeed.Value = new Random(Convert.ToInt32(DateTime.Now.Ticks % Int32.MaxValue)).Next(0, Int32.MaxValue);
         }
     }
 }

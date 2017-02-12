@@ -3,13 +3,14 @@ using World.Tile;
 using Newtonsoft.Json;
 using System.Collections.Generic;
 using System.Diagnostics;
+using SharpNoise;
+using SharpNoise.Modules;
+using System.Threading.Tasks;
 
 namespace World {
     public class World {
-        public const double DEFAULT_X_OFFSET = 0.01;
-        public const double DEFAULT_Y_OFFSET = 0.01;
-        public const double DEFAULT_X_OFFSET_COEF = 1;
-        public const double DEFAULT_Y_OFFSET_COEF = 1;
+        public const double DEFAULT_SCALE_X = 0.004;
+        public const double DEFAULT_SCALE_Y = 0.004;
 
         public string Name { get; set; }
         public int Width { get; set; }
@@ -52,7 +53,10 @@ namespace World {
             this.SeaLevel = seaLevel;
             this.ShoreLine = shoreLine;
             this.Tiles = new ITile[this.Width, this.Height, this.Depth];
-            if (generate) this.GenerateTiles(DEFAULT_X_OFFSET, DEFAULT_Y_OFFSET, DEFAULT_X_OFFSET_COEF, DEFAULT_Y_OFFSET_COEF);
+
+            int seed = Convert.ToInt32(DateTime.Now.Ticks % Int32.MaxValue);
+
+            if (generate) this.GenerateTiles(DEFAULT_SCALE_X, DEFAULT_SCALE_Y, seed);
         }
 
         /// <summary>
@@ -132,7 +136,7 @@ namespace World {
             return count;
         }
 
-        public void GenerateTiles(double offsetX, double offsetY, double offsetXCoeficient, double offsetYCoeficient) {
+        public void GenerateTiles(double scaleX, double scaleY, int seed) {
             Stopwatch sw = new Stopwatch();
             sw.Start();
             
@@ -140,10 +144,10 @@ namespace World {
             this.Tiles = new ITile[this.Width, this.Height, this.Depth];
 
             //generate a 2D plane representing the contours of the landscape
-            double[,] landscapePlane = this.GenerateLandscapePlane(offsetX, offsetY, offsetXCoeficient, offsetYCoeficient);
+            double[,] landscapePlane = this.GenerateLandscapePlane(scaleX, scaleY, seed);
 
             for (int x = 0; x < this.Width; x++) {
-                for (int y = 0; y < this.Height; y++) {
+                Parallel.For(0, this.Height, (y) => {
                     for (int z = 0; z < this.Depth; z++) {
                         double landscapeElevation = landscapePlane[x, y];
                         if (z > landscapeElevation) {
@@ -166,23 +170,31 @@ namespace World {
                             }
                         }
                     }
-                }
+                });
             }
 
             sw.Stop();
             Console.WriteLine("Landscape generation time: {0} ticks, {1} ms.", sw.ElapsedTicks, sw.ElapsedMilliseconds);
         }
 
-        private double[,] GenerateLandscapePlane(double offsetX, double offsetY, double offsetXCoeficient, double offsetYCoeficient) {
+        public void ClearTiles() {
+            Tiles = null;
+            GC.Collect();
+        }
+
+        private double[,] GenerateLandscapePlane(double scaleX, double scaleY, int seed) {
             Stopwatch sw = new Stopwatch();
             sw.Start();
+
+            Perlin p = new Perlin();
+            p.Seed = seed;
+
+            double halfDepth = (this.Depth / 2);
 
             double[,] landscapePlane = new double[this.Width, this.Height];
             for (int x = 0; x < this.Width; x++) {
                 for (int y = 0; y < this.Height; y++) {
-                    landscapePlane[x, y] = (((Math.Sin(x * offsetX) + (offsetX * offsetXCoeficient))
-                                           * (Math.Sin(y * offsetY) + (offsetY * offsetYCoeficient)))
-                                           * (this.Depth / 2)) + (this.Depth / 2);
+                    landscapePlane[x, y] = (p.GetValue(x * scaleX, y * scaleY, 0.1) * halfDepth) + halfDepth;
                 }
             }
 

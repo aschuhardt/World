@@ -40,14 +40,6 @@
             this.nudHeight = new System.Windows.Forms.NumericUpDown();
             this.label3 = new System.Windows.Forms.Label();
             this.nudSeaLevel = new System.Windows.Forms.NumericUpDown();
-            this.label6 = new System.Windows.Forms.Label();
-            this.nudXOffset = new System.Windows.Forms.NumericUpDown();
-            this.label5 = new System.Windows.Forms.Label();
-            this.nudYOffset = new System.Windows.Forms.NumericUpDown();
-            this.label7 = new System.Windows.Forms.Label();
-            this.nudXCoef = new System.Windows.Forms.NumericUpDown();
-            this.label8 = new System.Windows.Forms.Label();
-            this.nudYCoef = new System.Windows.Forms.NumericUpDown();
             this.btnSave = new System.Windows.Forms.Button();
             this.btnLoad = new System.Windows.Forms.Button();
             this.btnExport = new System.Windows.Forms.Button();
@@ -59,18 +51,24 @@
             this.cbOccludeWater = new System.Windows.Forms.CheckBox();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
             this.groupBox2 = new System.Windows.Forms.GroupBox();
+            this.label5 = new System.Windows.Forms.Label();
+            this.nudScaleX = new System.Windows.Forms.NumericUpDown();
+            this.label7 = new System.Windows.Forms.Label();
+            this.nudScaleY = new System.Windows.Forms.NumericUpDown();
+            this.label6 = new System.Windows.Forms.Label();
+            this.nudSeed = new System.Windows.Forms.NumericUpDown();
+            this.btnRandomSeed = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.pbRender)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.nudWidth)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.nudShoreLine)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.nudDepth)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.nudHeight)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.nudSeaLevel)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.nudXOffset)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.nudYOffset)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.nudXCoef)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.nudYCoef)).BeginInit();
             this.groupBox1.SuspendLayout();
             this.groupBox2.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.nudScaleX)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.nudScaleY)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.nudSeed)).BeginInit();
             this.SuspendLayout();
             // 
             // pbRender
@@ -223,122 +221,6 @@
             this.nudSeaLevel.Size = new System.Drawing.Size(73, 20);
             this.nudSeaLevel.TabIndex = 12;
             // 
-            // label6
-            // 
-            this.label6.AutoSize = true;
-            this.label6.Location = new System.Drawing.Point(6, 16);
-            this.label6.Name = "label6";
-            this.label6.Size = new System.Drawing.Size(48, 13);
-            this.label6.TabIndex = 17;
-            this.label6.Text = "X-Offset:";
-            // 
-            // nudXOffset
-            // 
-            this.nudXOffset.DecimalPlaces = 2;
-            this.nudXOffset.Increment = new decimal(new int[] {
-            1,
-            0,
-            0,
-            131072});
-            this.nudXOffset.Location = new System.Drawing.Point(69, 12);
-            this.nudXOffset.Maximum = new decimal(new int[] {
-            5,
-            0,
-            0,
-            65536});
-            this.nudXOffset.Minimum = new decimal(new int[] {
-            5,
-            0,
-            0,
-            -2147418112});
-            this.nudXOffset.Name = "nudXOffset";
-            this.nudXOffset.Size = new System.Drawing.Size(73, 20);
-            this.nudXOffset.TabIndex = 16;
-            // 
-            // label5
-            // 
-            this.label5.AutoSize = true;
-            this.label5.Location = new System.Drawing.Point(6, 42);
-            this.label5.Name = "label5";
-            this.label5.Size = new System.Drawing.Size(48, 13);
-            this.label5.TabIndex = 19;
-            this.label5.Text = "Y-Offset:";
-            // 
-            // nudYOffset
-            // 
-            this.nudYOffset.DecimalPlaces = 2;
-            this.nudYOffset.Increment = new decimal(new int[] {
-            1,
-            0,
-            0,
-            131072});
-            this.nudYOffset.Location = new System.Drawing.Point(69, 38);
-            this.nudYOffset.Maximum = new decimal(new int[] {
-            5,
-            0,
-            0,
-            65536});
-            this.nudYOffset.Minimum = new decimal(new int[] {
-            5,
-            0,
-            0,
-            -2147418112});
-            this.nudYOffset.Name = "nudYOffset";
-            this.nudYOffset.Size = new System.Drawing.Size(73, 20);
-            this.nudYOffset.TabIndex = 18;
-            // 
-            // label7
-            // 
-            this.label7.AutoSize = true;
-            this.label7.Location = new System.Drawing.Point(6, 68);
-            this.label7.Name = "label7";
-            this.label7.Size = new System.Drawing.Size(45, 13);
-            this.label7.TabIndex = 21;
-            this.label7.Text = "X-Coef.:";
-            // 
-            // nudXCoef
-            // 
-            this.nudXCoef.Location = new System.Drawing.Point(69, 64);
-            this.nudXCoef.Maximum = new decimal(new int[] {
-            32,
-            0,
-            0,
-            0});
-            this.nudXCoef.Minimum = new decimal(new int[] {
-            32,
-            0,
-            0,
-            -2147483648});
-            this.nudXCoef.Name = "nudXCoef";
-            this.nudXCoef.Size = new System.Drawing.Size(73, 20);
-            this.nudXCoef.TabIndex = 20;
-            // 
-            // label8
-            // 
-            this.label8.AutoSize = true;
-            this.label8.Location = new System.Drawing.Point(6, 94);
-            this.label8.Name = "label8";
-            this.label8.Size = new System.Drawing.Size(45, 13);
-            this.label8.TabIndex = 23;
-            this.label8.Text = "Y-Coef.:";
-            // 
-            // nudYCoef
-            // 
-            this.nudYCoef.Location = new System.Drawing.Point(69, 90);
-            this.nudYCoef.Maximum = new decimal(new int[] {
-            32,
-            0,
-            0,
-            0});
-            this.nudYCoef.Minimum = new decimal(new int[] {
-            32,
-            0,
-            0,
-            -2147483648});
-            this.nudYCoef.Name = "nudYCoef";
-            this.nudYCoef.Size = new System.Drawing.Size(73, 20);
-            this.nudYCoef.TabIndex = 22;
-            // 
             // btnSave
             // 
             this.btnSave.Location = new System.Drawing.Point(277, 169);
@@ -380,7 +262,7 @@
             // cboStyle
             // 
             this.cboStyle.FormattingEnabled = true;
-            this.cboStyle.Location = new System.Drawing.Point(68, 118);
+            this.cboStyle.Location = new System.Drawing.Point(68, 119);
             this.cboStyle.Name = "cboStyle";
             this.cboStyle.Size = new System.Drawing.Size(74, 21);
             this.cboStyle.TabIndex = 27;
@@ -388,7 +270,7 @@
             // label9
             // 
             this.label9.AutoSize = true;
-            this.label9.Location = new System.Drawing.Point(6, 121);
+            this.label9.Location = new System.Drawing.Point(6, 122);
             this.label9.Name = "label9";
             this.label9.Size = new System.Drawing.Size(33, 13);
             this.label9.TabIndex = 28;
@@ -397,7 +279,7 @@
             // cbOccludeWater
             // 
             this.cbOccludeWater.AutoSize = true;
-            this.cbOccludeWater.Location = new System.Drawing.Point(9, 145);
+            this.cbOccludeWater.Location = new System.Drawing.Point(9, 146);
             this.cbOccludeWater.Name = "cbOccludeWater";
             this.cbOccludeWater.Size = new System.Drawing.Size(98, 17);
             this.cbOccludeWater.TabIndex = 29;
@@ -407,23 +289,22 @@
             // groupBox1
             // 
             this.groupBox1.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
+            this.groupBox1.Controls.Add(this.btnRandomSeed);
             this.groupBox1.Controls.Add(this.label6);
-            this.groupBox1.Controls.Add(this.cbOccludeWater);
-            this.groupBox1.Controls.Add(this.nudXOffset);
-            this.groupBox1.Controls.Add(this.label9);
-            this.groupBox1.Controls.Add(this.nudYOffset);
-            this.groupBox1.Controls.Add(this.cboStyle);
-            this.groupBox1.Controls.Add(this.label5);
-            this.groupBox1.Controls.Add(this.nudXCoef);
+            this.groupBox1.Controls.Add(this.nudSeed);
             this.groupBox1.Controls.Add(this.label7);
-            this.groupBox1.Controls.Add(this.nudYCoef);
-            this.groupBox1.Controls.Add(this.label8);
+            this.groupBox1.Controls.Add(this.nudScaleY);
+            this.groupBox1.Controls.Add(this.label5);
+            this.groupBox1.Controls.Add(this.nudScaleX);
+            this.groupBox1.Controls.Add(this.cbOccludeWater);
+            this.groupBox1.Controls.Add(this.label9);
+            this.groupBox1.Controls.Add(this.cboStyle);
             this.groupBox1.Location = new System.Drawing.Point(439, 12);
             this.groupBox1.Name = "groupBox1";
             this.groupBox1.Size = new System.Drawing.Size(154, 180);
             this.groupBox1.TabIndex = 30;
             this.groupBox1.TabStop = false;
-            this.groupBox1.Text = "Rendering";
+            this.groupBox1.Text = "Landscape";
             // 
             // groupBox2
             // 
@@ -443,6 +324,91 @@
             this.groupBox2.TabIndex = 31;
             this.groupBox2.TabStop = false;
             this.groupBox2.Text = "Map";
+            // 
+            // label5
+            // 
+            this.label5.AutoSize = true;
+            this.label5.Location = new System.Drawing.Point(6, 16);
+            this.label5.Name = "label5";
+            this.label5.Size = new System.Drawing.Size(47, 13);
+            this.label5.TabIndex = 31;
+            this.label5.Text = "Scale X:";
+            // 
+            // nudScaleX
+            // 
+            this.nudScaleX.DecimalPlaces = 3;
+            this.nudScaleX.Increment = new decimal(new int[] {
+            1,
+            0,
+            0,
+            196608});
+            this.nudScaleX.Location = new System.Drawing.Point(69, 12);
+            this.nudScaleX.Maximum = new decimal(new int[] {
+            1,
+            0,
+            0,
+            0});
+            this.nudScaleX.Name = "nudScaleX";
+            this.nudScaleX.Size = new System.Drawing.Size(73, 20);
+            this.nudScaleX.TabIndex = 30;
+            // 
+            // label7
+            // 
+            this.label7.AutoSize = true;
+            this.label7.Location = new System.Drawing.Point(6, 42);
+            this.label7.Name = "label7";
+            this.label7.Size = new System.Drawing.Size(47, 13);
+            this.label7.TabIndex = 35;
+            this.label7.Text = "Scale Y:";
+            // 
+            // nudScaleY
+            // 
+            this.nudScaleY.DecimalPlaces = 3;
+            this.nudScaleY.Increment = new decimal(new int[] {
+            1,
+            0,
+            0,
+            196608});
+            this.nudScaleY.Location = new System.Drawing.Point(69, 38);
+            this.nudScaleY.Maximum = new decimal(new int[] {
+            1,
+            0,
+            0,
+            0});
+            this.nudScaleY.Name = "nudScaleY";
+            this.nudScaleY.Size = new System.Drawing.Size(73, 20);
+            this.nudScaleY.TabIndex = 34;
+            // 
+            // label6
+            // 
+            this.label6.AutoSize = true;
+            this.label6.Location = new System.Drawing.Point(6, 68);
+            this.label6.Name = "label6";
+            this.label6.Size = new System.Drawing.Size(35, 13);
+            this.label6.TabIndex = 37;
+            this.label6.Text = "Seed:";
+            // 
+            // nudSeed
+            // 
+            this.nudSeed.Location = new System.Drawing.Point(69, 64);
+            this.nudSeed.Maximum = new decimal(new int[] {
+            2147483647,
+            0,
+            0,
+            0});
+            this.nudSeed.Name = "nudSeed";
+            this.nudSeed.Size = new System.Drawing.Size(73, 20);
+            this.nudSeed.TabIndex = 36;
+            // 
+            // btnRandomSeed
+            // 
+            this.btnRandomSeed.Location = new System.Drawing.Point(67, 90);
+            this.btnRandomSeed.Name = "btnRandomSeed";
+            this.btnRandomSeed.Size = new System.Drawing.Size(75, 23);
+            this.btnRandomSeed.TabIndex = 32;
+            this.btnRandomSeed.Text = "Random";
+            this.btnRandomSeed.UseVisualStyleBackColor = true;
+            this.btnRandomSeed.Click += new System.EventHandler(this.btnRandomSeed_Click);
             // 
             // Form1
             // 
@@ -469,14 +435,13 @@
             ((System.ComponentModel.ISupportInitialize)(this.nudDepth)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.nudHeight)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.nudSeaLevel)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.nudXOffset)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.nudYOffset)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.nudXCoef)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.nudYCoef)).EndInit();
             this.groupBox1.ResumeLayout(false);
             this.groupBox1.PerformLayout();
             this.groupBox2.ResumeLayout(false);
             this.groupBox2.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.nudScaleX)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.nudScaleY)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.nudSeed)).EndInit();
             this.ResumeLayout(false);
 
         }
@@ -494,14 +459,6 @@
         private System.Windows.Forms.NumericUpDown nudHeight;
         private System.Windows.Forms.Label label3;
         private System.Windows.Forms.NumericUpDown nudSeaLevel;
-        private System.Windows.Forms.Label label6;
-        private System.Windows.Forms.NumericUpDown nudXOffset;
-        private System.Windows.Forms.Label label5;
-        private System.Windows.Forms.NumericUpDown nudYOffset;
-        private System.Windows.Forms.Label label7;
-        private System.Windows.Forms.NumericUpDown nudXCoef;
-        private System.Windows.Forms.Label label8;
-        private System.Windows.Forms.NumericUpDown nudYCoef;
         private System.Windows.Forms.Button btnSave;
         private System.Windows.Forms.Button btnLoad;
         private System.Windows.Forms.Button btnExport;
@@ -513,6 +470,13 @@
         private System.Windows.Forms.CheckBox cbOccludeWater;
         private System.Windows.Forms.GroupBox groupBox1;
         private System.Windows.Forms.GroupBox groupBox2;
+        private System.Windows.Forms.Button btnRandomSeed;
+        private System.Windows.Forms.Label label6;
+        private System.Windows.Forms.NumericUpDown nudSeed;
+        private System.Windows.Forms.Label label7;
+        private System.Windows.Forms.NumericUpDown nudScaleY;
+        private System.Windows.Forms.Label label5;
+        private System.Windows.Forms.NumericUpDown nudScaleX;
     }
 }
 

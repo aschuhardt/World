@@ -52,15 +52,16 @@ namespace Visualizer {
 
         public WorldMapRenderer.RenderStyles ImageRenderStyle { get; set; }
         public bool OccludeWater { get; set; }
-        public double XOffset { get; set; }
-        public double YOffset { get; set; }
-        public double XOffsetCoefficient { get; set; }
-        public double YOffsetCoefficient { get; set; }
+        public int Seed { get; set; }
+        public double ScaleX { get; set; }
+        public double ScaleY { get; set; }
 
         public Image RenderedImage {
             get {
-                _backingData.GenerateTiles(this.XOffset, this.YOffset, this.XOffsetCoefficient, this.YOffsetCoefficient);
-                return WorldMapRenderer.RenderTopDownMap(_backingData, this.ImageRenderStyle, this.OccludeWater);
+                _backingData.GenerateTiles(this.ScaleX, this.ScaleY, this.Seed);
+                Bitmap bmp = WorldMapRenderer.RenderTopDownMap(_backingData, this.ImageRenderStyle, this.OccludeWater);
+                _backingData.ClearTiles();
+                return bmp;
             }
         }
 
@@ -73,7 +74,7 @@ namespace Visualizer {
         }
 
         public WorldBindingSource() {
-            _backingData = new World.World(DEFAULT_VALUE_WIDTH, DEFAULT_VALUE_HEIGHT, DEFAULT_VALUE_DEPTH, DEFAULT_VALUE_SEALEVEL, DEFAULT_VALUE_SHORELINE);
+            _backingData = new World.World(DEFAULT_VALUE_WIDTH, DEFAULT_VALUE_HEIGHT, DEFAULT_VALUE_DEPTH, DEFAULT_VALUE_SEALEVEL, DEFAULT_VALUE_SHORELINE, "World", false);
             setDefaultRenderParams();
         }
 
@@ -83,10 +84,9 @@ namespace Visualizer {
         }
 
         private void setDefaultRenderParams() {
-            this.XOffset = World.World.DEFAULT_X_OFFSET;
-            this.YOffset = World.World.DEFAULT_Y_OFFSET;
-            this.XOffsetCoefficient = World.World.DEFAULT_X_OFFSET_COEF;
-            this.YOffsetCoefficient = World.World.DEFAULT_Y_OFFSET_COEF;
+            this.ScaleX = World.World.DEFAULT_SCALE_X;
+            this.ScaleY = World.World.DEFAULT_SCALE_Y;
+            this.Seed = Convert.ToInt32(DateTime.Now.Ticks % Int32.MaxValue);
             this.ImageRenderStyle = DEFAULT_VALUE_RENDERSTYLE;
             this.OccludeWater = DEFAULT_VALUE_OCCLUDE_WATER;
         }
