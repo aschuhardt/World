@@ -23,3 +23,5 @@ C:\Users\aschuhardt\Documents\GitHub\World\Tests\bin\Debug\Newtonsoft.Json.xml
 C:\Users\aschuhardt\Documents\GitHub\World\Tests\obj\Debug\Tests.csprojResolveAssemblyReference.cache
 C:\Users\aschuhardt\Documents\GitHub\World\Tests\obj\Debug\Tests.dll
 C:\Users\aschuhardt\Documents\GitHub\World\Tests\obj\Debug\Tests.pdb
+C:\Users\aschuhardt\Documents\GitHub\World\Tests\bin\Debug\SharpNoise.dll
+C:\Users\aschuhardt\Documents\GitHub\World\Tests\bin\Debug\SharpNoise.xml

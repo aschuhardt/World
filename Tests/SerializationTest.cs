@@ -16,6 +16,7 @@ namespace World {
         [SetUp()]
         public void Setup() {
             _baseWorld = new World(_width, _height, _depth, _worldName);
+            _baseWorld.GenerateTiles();
 
             //save a bitmap render because why not
             WorldMapRenderer.SaveRenderedTopDownMap(_baseWorld, "map_depth.bmp", WorldMapRenderer.RenderStyles.Depth, true);
@@ -33,6 +34,7 @@ namespace World {
         [Test()]
         public void TestCase() {
             World loaded = World.LoadFromFile(_fileName);
+            loaded.GenerateTiles();
             Assert.AreEqual(_width, loaded.Width);
             Assert.AreEqual(_height, loaded.Height);
             Assert.AreEqual(_depth, loaded.Depth);

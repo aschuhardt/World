@@ -55,6 +55,22 @@ namespace World {
                                     case "Z":
                                         worldInfo.Tiles.Peek().Z = Int32.Parse(rdr.Value.ToString());
                                         break;
+                                    case "Seed":
+                                        worldInfo.Seed = Int32.Parse(rdr.Value.ToString());
+                                        break;
+                                    default:
+                                        break;
+                                }
+                            }
+
+                            if (rdr.TokenType == JsonToken.Float) {
+                                switch (currentProperty) {
+                                    case "ScaleX":
+                                        worldInfo.ScaleX = double.Parse(rdr.Value.ToString());
+                                        break;
+                                    case "ScaleY":
+                                        worldInfo.ScaleY = double.Parse(rdr.Value.ToString());
+                                        break;
                                     default:
                                         break;
                                 }
@@ -102,6 +118,9 @@ namespace World {
                 strm.Write($"\"Depth\": {w.Depth},");
                 strm.Write($"\"SeaLevel\": {w.SeaLevel},");
                 strm.Write($"\"ShoreLine\": {w.ShoreLine},");
+                strm.Write($"\"ScaleX\": {w.ScaleX},");
+                strm.Write($"\"ScaleY\": {w.ScaleY},");
+                strm.Write($"\"Seed\": {w.Seed},");
                 strm.Write($"\"Tiles\": [ ");
 
                 //filter out tiles that are empty air
@@ -128,6 +147,9 @@ namespace World {
             public int Depth { get; set; }
             public int SeaLevel { get; set; }
             public int ShoreLine { get; set; }
+            public double ScaleX { get; set; }
+            public double ScaleY { get; set; }
+            public int Seed { get; set; }
             public Stack<ITile> Tiles { get; set; }
 
             public WorldInfoTO() {
@@ -136,6 +158,9 @@ namespace World {
 
             public World ToWorld() {
                 World output = new World(this.Width, this.Height, this.Depth, this.SeaLevel, this.ShoreLine, this.Name, false);
+                output.ScaleX = this.ScaleX;
+                output.ScaleY = this.ScaleY;
+                output.Seed = this.Seed;
                 this.Tiles.ToList().ForEach((x) => {
                     output.SetTileAtLocation(x, x.X, x.Y, x.Z);
                 });

@@ -18,6 +18,9 @@ namespace World {
         public int Depth { get; set; }
         public int SeaLevel { get; set; }
         public int ShoreLine { get; set; }
+        public double ScaleX { get; set; }
+        public double ScaleY { get; set; }
+        public int Seed { get; set; }
 
         [JsonIgnore]
         public ITile[,,] Tiles { get; private set; }
@@ -53,10 +56,11 @@ namespace World {
             this.SeaLevel = seaLevel;
             this.ShoreLine = shoreLine;
             this.Tiles = new ITile[this.Width, this.Height, this.Depth];
-
-            int seed = Convert.ToInt32(DateTime.Now.Ticks % Int32.MaxValue);
-
-            if (generate) this.GenerateTiles(DEFAULT_SCALE_X, DEFAULT_SCALE_Y, seed);
+            this.ScaleX = DEFAULT_SCALE_X;
+            this.ScaleY = DEFAULT_SCALE_Y;
+            this.Seed = Convert.ToInt32(DateTime.Now.Ticks % Int32.MaxValue);
+            
+            if (generate) this.GenerateTiles();
         }
 
         /// <summary>
@@ -136,7 +140,7 @@ namespace World {
             return count;
         }
 
-        public void GenerateTiles(double scaleX, double scaleY, int seed) {
+        public void GenerateTiles() {
             Stopwatch sw = new Stopwatch();
             sw.Start();
             
@@ -144,7 +148,7 @@ namespace World {
             this.Tiles = new ITile[this.Width, this.Height, this.Depth];
 
             //generate a 2D plane representing the contours of the landscape
-            double[,] landscapePlane = this.GenerateLandscapePlane(scaleX, scaleY, seed);
+            double[,] landscapePlane = this.GenerateLandscapePlane(this.ScaleX, this.ScaleY, this.Seed);
 
             for (int x = 0; x < this.Width; x++) {
                 Parallel.For(0, this.Height, (y) => {
