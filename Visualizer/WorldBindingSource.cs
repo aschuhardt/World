@@ -66,7 +66,9 @@ namespace Visualizer {
         }
 
         public void Save(string path) {
+            _backingData.GenerateTiles(this.ScaleX, this.ScaleY, this.Seed);
             _backingData.Save(path);
+            _backingData.ClearTiles();
         }
 
         public World.World Load(string path) {

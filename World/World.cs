@@ -188,7 +188,7 @@ namespace World {
 
             Perlin p = new Perlin();
             p.Seed = seed;
-
+            
             double halfDepth = (this.Depth / 2);
 
             double[,] landscapePlane = new double[this.Width, this.Height];
