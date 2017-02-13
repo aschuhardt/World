@@ -50,9 +50,6 @@ namespace Visualizer {
             set { _backingData.ShoreLine = value; }
         }
 
-        public WorldMapRenderer.RenderStyles ImageRenderStyle { get; set; }
-        public bool OccludeWater { get; set; }
-
         public double ScaleX {
             get { return _backingData.ScaleX; }
             set { _backingData.ScaleX = value; }
@@ -68,6 +65,8 @@ namespace Visualizer {
             set { _backingData.Seed = value; }
         }
 
+        public WorldMapRenderer.RenderStyles ImageRenderStyle { get; set; }
+        public bool OccludeWater { get; set; }
         public Image RenderedImage {
             get {
                 _backingData.GenerateTiles();
