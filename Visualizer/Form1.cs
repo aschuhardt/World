@@ -110,5 +110,10 @@ namespace Visualizer {
         private void btnRandomSeed_Click(object sender, EventArgs e) {
             nudSeed.Value = new Random(Convert.ToInt32(DateTime.Now.Ticks % Int32.MaxValue)).Next(0, Int32.MaxValue);
         }
+
+        private void button1_Click(object sender, EventArgs e) {
+            nudSeed.Value = new Random(Convert.ToInt32(DateTime.Now.Ticks % Int32.MaxValue)).Next(0, Int32.MaxValue);
+            refreshRender();
+        }
     }
 }

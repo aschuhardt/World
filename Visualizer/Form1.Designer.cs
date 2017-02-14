@@ -50,14 +50,15 @@
             this.label9 = new System.Windows.Forms.Label();
             this.cbOccludeWater = new System.Windows.Forms.CheckBox();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
-            this.groupBox2 = new System.Windows.Forms.GroupBox();
-            this.label5 = new System.Windows.Forms.Label();
-            this.nudScaleX = new System.Windows.Forms.NumericUpDown();
-            this.label7 = new System.Windows.Forms.Label();
-            this.nudScaleY = new System.Windows.Forms.NumericUpDown();
+            this.btnRandomSeed = new System.Windows.Forms.Button();
             this.label6 = new System.Windows.Forms.Label();
             this.nudSeed = new System.Windows.Forms.NumericUpDown();
-            this.btnRandomSeed = new System.Windows.Forms.Button();
+            this.label7 = new System.Windows.Forms.Label();
+            this.nudScaleY = new System.Windows.Forms.NumericUpDown();
+            this.label5 = new System.Windows.Forms.Label();
+            this.nudScaleX = new System.Windows.Forms.NumericUpDown();
+            this.groupBox2 = new System.Windows.Forms.GroupBox();
+            this.button1 = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.pbRender)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.nudWidth)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.nudShoreLine)).BeginInit();
@@ -65,10 +66,10 @@
             ((System.ComponentModel.ISupportInitialize)(this.nudHeight)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.nudSeaLevel)).BeginInit();
             this.groupBox1.SuspendLayout();
-            this.groupBox2.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.nudScaleX)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.nudScaleY)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.nudSeed)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.nudScaleY)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.nudScaleX)).BeginInit();
+            this.groupBox2.SuspendLayout();
             this.SuspendLayout();
             // 
             // pbRender
@@ -306,51 +307,36 @@
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "Landscape";
             // 
-            // groupBox2
+            // btnRandomSeed
             // 
-            this.groupBox2.Controls.Add(this.label1);
-            this.groupBox2.Controls.Add(this.nudWidth);
-            this.groupBox2.Controls.Add(this.nudShoreLine);
-            this.groupBox2.Controls.Add(this.label2);
-            this.groupBox2.Controls.Add(this.nudDepth);
-            this.groupBox2.Controls.Add(this.label3);
-            this.groupBox2.Controls.Add(this.Depth);
-            this.groupBox2.Controls.Add(this.nudSeaLevel);
-            this.groupBox2.Controls.Add(this.nudHeight);
-            this.groupBox2.Controls.Add(this.label4);
-            this.groupBox2.Location = new System.Drawing.Point(280, 12);
-            this.groupBox2.Name = "groupBox2";
-            this.groupBox2.Size = new System.Drawing.Size(153, 151);
-            this.groupBox2.TabIndex = 31;
-            this.groupBox2.TabStop = false;
-            this.groupBox2.Text = "Map";
+            this.btnRandomSeed.Location = new System.Drawing.Point(67, 90);
+            this.btnRandomSeed.Name = "btnRandomSeed";
+            this.btnRandomSeed.Size = new System.Drawing.Size(75, 23);
+            this.btnRandomSeed.TabIndex = 32;
+            this.btnRandomSeed.Text = "Random";
+            this.btnRandomSeed.UseVisualStyleBackColor = true;
+            this.btnRandomSeed.Click += new System.EventHandler(this.btnRandomSeed_Click);
             // 
-            // label5
+            // label6
             // 
-            this.label5.AutoSize = true;
-            this.label5.Location = new System.Drawing.Point(6, 16);
-            this.label5.Name = "label5";
-            this.label5.Size = new System.Drawing.Size(47, 13);
-            this.label5.TabIndex = 31;
-            this.label5.Text = "Scale X:";
+            this.label6.AutoSize = true;
+            this.label6.Location = new System.Drawing.Point(6, 68);
+            this.label6.Name = "label6";
+            this.label6.Size = new System.Drawing.Size(35, 13);
+            this.label6.TabIndex = 37;
+            this.label6.Text = "Seed:";
             // 
-            // nudScaleX
+            // nudSeed
             // 
-            this.nudScaleX.DecimalPlaces = 3;
-            this.nudScaleX.Increment = new decimal(new int[] {
-            1,
-            0,
-            0,
-            196608});
-            this.nudScaleX.Location = new System.Drawing.Point(69, 12);
-            this.nudScaleX.Maximum = new decimal(new int[] {
-            1,
+            this.nudSeed.Location = new System.Drawing.Point(69, 64);
+            this.nudSeed.Maximum = new decimal(new int[] {
+            2147483647,
             0,
             0,
             0});
-            this.nudScaleX.Name = "nudScaleX";
-            this.nudScaleX.Size = new System.Drawing.Size(73, 20);
-            this.nudScaleX.TabIndex = 30;
+            this.nudSeed.Name = "nudSeed";
+            this.nudSeed.Size = new System.Drawing.Size(73, 20);
+            this.nudSeed.TabIndex = 36;
             // 
             // label7
             // 
@@ -379,42 +365,68 @@
             this.nudScaleY.Size = new System.Drawing.Size(73, 20);
             this.nudScaleY.TabIndex = 34;
             // 
-            // label6
+            // label5
             // 
-            this.label6.AutoSize = true;
-            this.label6.Location = new System.Drawing.Point(6, 68);
-            this.label6.Name = "label6";
-            this.label6.Size = new System.Drawing.Size(35, 13);
-            this.label6.TabIndex = 37;
-            this.label6.Text = "Seed:";
+            this.label5.AutoSize = true;
+            this.label5.Location = new System.Drawing.Point(6, 16);
+            this.label5.Name = "label5";
+            this.label5.Size = new System.Drawing.Size(47, 13);
+            this.label5.TabIndex = 31;
+            this.label5.Text = "Scale X:";
             // 
-            // nudSeed
+            // nudScaleX
             // 
-            this.nudSeed.Location = new System.Drawing.Point(69, 64);
-            this.nudSeed.Maximum = new decimal(new int[] {
-            2147483647,
+            this.nudScaleX.DecimalPlaces = 3;
+            this.nudScaleX.Increment = new decimal(new int[] {
+            1,
+            0,
+            0,
+            196608});
+            this.nudScaleX.Location = new System.Drawing.Point(69, 12);
+            this.nudScaleX.Maximum = new decimal(new int[] {
+            1,
             0,
             0,
             0});
-            this.nudSeed.Name = "nudSeed";
-            this.nudSeed.Size = new System.Drawing.Size(73, 20);
-            this.nudSeed.TabIndex = 36;
+            this.nudScaleX.Name = "nudScaleX";
+            this.nudScaleX.Size = new System.Drawing.Size(73, 20);
+            this.nudScaleX.TabIndex = 30;
             // 
-            // btnRandomSeed
+            // groupBox2
             // 
-            this.btnRandomSeed.Location = new System.Drawing.Point(67, 90);
-            this.btnRandomSeed.Name = "btnRandomSeed";
-            this.btnRandomSeed.Size = new System.Drawing.Size(75, 23);
-            this.btnRandomSeed.TabIndex = 32;
-            this.btnRandomSeed.Text = "Random";
-            this.btnRandomSeed.UseVisualStyleBackColor = true;
-            this.btnRandomSeed.Click += new System.EventHandler(this.btnRandomSeed_Click);
+            this.groupBox2.Controls.Add(this.label1);
+            this.groupBox2.Controls.Add(this.nudWidth);
+            this.groupBox2.Controls.Add(this.nudShoreLine);
+            this.groupBox2.Controls.Add(this.label2);
+            this.groupBox2.Controls.Add(this.nudDepth);
+            this.groupBox2.Controls.Add(this.label3);
+            this.groupBox2.Controls.Add(this.Depth);
+            this.groupBox2.Controls.Add(this.nudSeaLevel);
+            this.groupBox2.Controls.Add(this.nudHeight);
+            this.groupBox2.Controls.Add(this.label4);
+            this.groupBox2.Location = new System.Drawing.Point(280, 12);
+            this.groupBox2.Name = "groupBox2";
+            this.groupBox2.Size = new System.Drawing.Size(153, 151);
+            this.groupBox2.TabIndex = 31;
+            this.groupBox2.TabStop = false;
+            this.groupBox2.Text = "Map";
+            // 
+            // button1
+            // 
+            this.button1.Location = new System.Drawing.Point(277, 227);
+            this.button1.Name = "button1";
+            this.button1.Size = new System.Drawing.Size(156, 23);
+            this.button1.TabIndex = 32;
+            this.button1.Text = "Generate + Random Seed";
+            this.button1.UseVisualStyleBackColor = true;
+            this.button1.Click += new System.EventHandler(this.button1_Click);
             // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(603, 280);
+            this.Controls.Add(this.button1);
             this.Controls.Add(this.groupBox2);
             this.Controls.Add(this.groupBox1);
             this.Controls.Add(this.btnExport);
@@ -437,11 +449,11 @@
             ((System.ComponentModel.ISupportInitialize)(this.nudSeaLevel)).EndInit();
             this.groupBox1.ResumeLayout(false);
             this.groupBox1.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.nudSeed)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.nudScaleY)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.nudScaleX)).EndInit();
             this.groupBox2.ResumeLayout(false);
             this.groupBox2.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.nudScaleX)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.nudScaleY)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.nudSeed)).EndInit();
             this.ResumeLayout(false);
 
         }
@@ -477,6 +489,7 @@
         private System.Windows.Forms.NumericUpDown nudScaleY;
         private System.Windows.Forms.Label label5;
         private System.Windows.Forms.NumericUpDown nudScaleX;
+        private System.Windows.Forms.Button button1;
     }
 }
 
