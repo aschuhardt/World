@@ -1,5 +1,7 @@
 ﻿using World.Tile;
 using LibNoise.Primitive;
+using LibNoise.Filter;
+using LibNoise.Combiner;
 
 namespace World.Utility {
     internal class LandscapeGenerator {
@@ -63,27 +65,15 @@ namespace World.Utility {
 
         private double[,] BuildHeightMap() {
             double halfDepth = (this.Depth / 2);
-            //RIP SharpNoise you were so nice but don't support .NET 3.5
-            //var c = new Cache() {
-            //    Source0 = new Blend() {
-            //        Source0 = new Perlin() {
-            //            Seed = this.Seed
-            //        },
-            //        Source1 = new Perlin() {
-            //            Seed = -this.Seed
-            //        },
-            //        Control = new RidgedMulti() {
-            //            Seed = this.Seed
-            //        }
-            //    }
-            //};
-
             ImprovedPerlin perlin = new ImprovedPerlin(this.Seed, LibNoise.NoiseQuality.Standard);
+            MultiFractal mf = new MultiFractal();
+            mf.Primitive2D = perlin;
+            mf.Primitive3D = perlin;
 
             double[,] landscapePlane = new double[this.Width, this.Height];
             for (int x = 0; x < this.Width; x++) {
                 for (int y = 0; y < this.Height; y++) {
-                    landscapePlane[x, y] = (perlin.GetValue(x * this.ScaleX, y * this.ScaleY, 0.1f) * halfDepth) + halfDepth;
+                    landscapePlane[x, y] = mf.GetValue(x * this.ScaleX, y * this.ScaleY, 0.1f) * halfDepth;
                 }
             }
             return landscapePlane;
