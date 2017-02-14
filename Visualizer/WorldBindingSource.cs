@@ -95,7 +95,7 @@ namespace Visualizer {
             }
         }
 
-        public int OffsetX {
+        public float OffsetX {
             get { return _backingData.OffsetX; }
             set {
                 _backingData.OffsetX = value;
@@ -103,7 +103,7 @@ namespace Visualizer {
             }
         }
 
-        public int OffsetY {
+        public float OffsetY {
             get { return _backingData.OffsetY; }
             set {
                 _backingData.OffsetY = value;

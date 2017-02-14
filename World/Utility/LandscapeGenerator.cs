@@ -56,12 +56,13 @@ namespace World.Utility {
             mf.Primitive2D = perlin;
             mf.Primitive3D = perlin;
 
-            //TranslatePoint tp = new TranslatePoint(mf, _world.OffsetX, _world.OffsetY, 0.0f);
+            TranslatePoint tp = new TranslatePoint(mf, _world.OffsetX, _world.OffsetY, 0.0f);
             
             double[,] landscapePlane = new double[_world.Width, _world.Height];
+
             for (int x = 0; x < _world.Width; x++) {
                 for (int y = 0; y < _world.Height; y++) {
-                    landscapePlane[x, y] = mf.GetValue((x * _world.ScaleX) + _world.OffsetX, (y * _world.ScaleY) + _world.OffsetY, 0.1f) * halfDepth;
+                    landscapePlane[x, y] = tp.GetValue((x + _world.OffsetX) / _world.ScaleX, (y + _world.OffsetY) / _world.ScaleY, 0.1f) * halfDepth;
                 }
             }
 

@@ -61,8 +61,8 @@
             this.button1 = new System.Windows.Forms.Button();
             this.lbloffsetx = new System.Windows.Forms.Label();
             this.nudOffsetX = new System.Windows.Forms.NumericUpDown();
-            this.nudOffsetY = new System.Windows.Forms.NumericUpDown();
             this.label10 = new System.Windows.Forms.Label();
+            this.nudOffsetY = new System.Windows.Forms.NumericUpDown();
             ((System.ComponentModel.ISupportInitialize)(this.pbRender)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.nudWidth)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.nudShoreLine)).BeginInit();
@@ -296,10 +296,10 @@
             // groupBox1
             // 
             this.groupBox1.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
+            this.groupBox1.Controls.Add(this.nudOffsetY);
             this.groupBox1.Controls.Add(this.lbloffsetx);
             this.groupBox1.Controls.Add(this.btnRandomSeed);
             this.groupBox1.Controls.Add(this.nudOffsetX);
-            this.groupBox1.Controls.Add(this.nudOffsetY);
             this.groupBox1.Controls.Add(this.label6);
             this.groupBox1.Controls.Add(this.label10);
             this.groupBox1.Controls.Add(this.nudSeed);
@@ -367,7 +367,7 @@
             196608});
             this.nudScaleY.Location = new System.Drawing.Point(69, 38);
             this.nudScaleY.Maximum = new decimal(new int[] {
-            1,
+            4096,
             0,
             0,
             0});
@@ -394,7 +394,7 @@
             196608});
             this.nudScaleX.Location = new System.Drawing.Point(69, 12);
             this.nudScaleX.Maximum = new decimal(new int[] {
-            1,
+            4096,
             0,
             0,
             0});
@@ -442,37 +442,26 @@
             // 
             // nudOffsetX
             // 
+            this.nudOffsetX.DecimalPlaces = 3;
             this.nudOffsetX.Increment = new decimal(new int[] {
-            64,
+            1,
             0,
             0,
-            0});
+            196608});
             this.nudOffsetX.Location = new System.Drawing.Point(69, 146);
             this.nudOffsetX.Maximum = new decimal(new int[] {
             4096,
             0,
             0,
             0});
-            this.nudOffsetX.Name = "nudOffsetX";
-            this.nudOffsetX.Size = new System.Drawing.Size(73, 20);
-            this.nudOffsetX.TabIndex = 14;
-            // 
-            // nudOffsetY
-            // 
-            this.nudOffsetY.Increment = new decimal(new int[] {
-            64,
-            0,
-            0,
-            0});
-            this.nudOffsetY.Location = new System.Drawing.Point(69, 172);
-            this.nudOffsetY.Maximum = new decimal(new int[] {
+            this.nudOffsetX.Minimum = new decimal(new int[] {
             4096,
             0,
             0,
-            0});
-            this.nudOffsetY.Name = "nudOffsetY";
-            this.nudOffsetY.Size = new System.Drawing.Size(73, 20);
-            this.nudOffsetY.TabIndex = 16;
+            -2147483648});
+            this.nudOffsetX.Name = "nudOffsetX";
+            this.nudOffsetX.Size = new System.Drawing.Size(73, 20);
+            this.nudOffsetX.TabIndex = 14;
             // 
             // label10
             // 
@@ -482,6 +471,29 @@
             this.label10.Size = new System.Drawing.Size(45, 13);
             this.label10.TabIndex = 17;
             this.label10.Text = "OffsetY:";
+            // 
+            // nudOffsetY
+            // 
+            this.nudOffsetY.DecimalPlaces = 3;
+            this.nudOffsetY.Increment = new decimal(new int[] {
+            1,
+            0,
+            0,
+            196608});
+            this.nudOffsetY.Location = new System.Drawing.Point(69, 172);
+            this.nudOffsetY.Maximum = new decimal(new int[] {
+            4096,
+            0,
+            0,
+            0});
+            this.nudOffsetY.Minimum = new decimal(new int[] {
+            4096,
+            0,
+            0,
+            -2147483648});
+            this.nudOffsetY.Name = "nudOffsetY";
+            this.nudOffsetY.Size = new System.Drawing.Size(73, 20);
+            this.nudOffsetY.TabIndex = 38;
             // 
             // Form1
             // 
@@ -556,8 +568,8 @@
         private System.Windows.Forms.Button button1;
         private System.Windows.Forms.Label lbloffsetx;
         private System.Windows.Forms.NumericUpDown nudOffsetX;
-        private System.Windows.Forms.NumericUpDown nudOffsetY;
         private System.Windows.Forms.Label label10;
+        private System.Windows.Forms.NumericUpDown nudOffsetY;
     }
 }
 

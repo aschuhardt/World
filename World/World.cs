@@ -4,8 +4,8 @@ using World.Tile;
 namespace World {
     [Serializable]
     public class World {
-        public const float DEFAULT_SCALE_X = 0.004f;
-        public const float DEFAULT_SCALE_Y = 0.004f;
+        public const float DEFAULT_SCALE_X = 10.0f;
+        public const float DEFAULT_SCALE_Y = 10.0f;
 
         public string Name { get; set; }
         public int Width { get; set; }
@@ -17,8 +17,8 @@ namespace World {
         public float ScaleY { get; set; }
         public int Seed { get; set; }
 
-        public int OffsetX { get; set; }
-        public int OffsetY { get; set; }
+        public float OffsetX { get; set; }
+        public float OffsetY { get; set; }
 
         public bool HasGeneratedTiles { get; set; }
 
