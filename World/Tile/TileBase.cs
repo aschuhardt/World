@@ -9,6 +9,7 @@ namespace World.Tile {
         private int _x;
         private int _y;
         private int _z;
+        private bool _shouldLoad;
 
         #region ITile implementation
         public TileTypes TileType {
@@ -56,6 +57,16 @@ namespace World.Tile {
                 return sb.ToString();
             }
         }
+
+        public bool ShouldLoad {
+            get {
+                return _shouldLoad;
+            }
+
+            set {
+                _shouldLoad = value;
+            }
+        }
         #endregion
 
         public TileBase(int x, int y, int z, TileTypes tileType = TileTypes.Air) {
@@ -63,13 +74,11 @@ namespace World.Tile {
             _y = y;
             _z = z;
             _tileType = tileType;
+            _shouldLoad = false;
         }
 
-        public TileBase(TileTypes t) {
-            _x = 0;
-            _y = 0;
-            _z = 0;
-            _tileType = t;
+        public TileBase(TileTypes t) : this(0, 0, 0, TileTypes.Air) {
+            
         }
     }
 }

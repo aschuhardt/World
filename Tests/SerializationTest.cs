@@ -6,7 +6,6 @@ namespace World {
     [TestFixture()]
     public class SerializationTest {
         string _worldName = "TestWorld";
-        string _fileName = "TestWorld.json";
         int _width = 256;
         int _height = 256;
         int _depth = 64;
@@ -33,7 +32,7 @@ namespace World {
 
         [Test()]
         public void TestCase() {
-            World loaded = World.LoadFromFile(_fileName);
+            World loaded = World.LoadFromFile(_worldName);
             loaded.GenerateTiles();
             Assert.AreEqual(_width, loaded.Width);
             Assert.AreEqual(_height, loaded.Height);
@@ -50,7 +49,7 @@ namespace World {
 
         [TearDown()]
         public void TearDown() {
-            File.Delete(_fileName);
+            File.Delete(_worldName);
         }
     }
 }
