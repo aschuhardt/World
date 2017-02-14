@@ -59,6 +59,13 @@ namespace Visualizer {
 
             cbOccludeWater.DataBindings.Clear();
             cbOccludeWater.DataBindings.Add("Checked", _worldVM, "OccludeWater", true, DataSourceUpdateMode.OnPropertyChanged);
+
+            nudOffsetX.DataBindings.Clear();
+            nudOffsetX.DataBindings.Add("Value", _worldVM, "OffsetX", true, DataSourceUpdateMode.OnPropertyChanged);
+
+            nudOffsetY.DataBindings.Clear();
+            nudOffsetY.DataBindings.Add("Value", _worldVM, "OffsetY", true, DataSourceUpdateMode.OnPropertyChanged);
+
             refreshRender();
         }
 
