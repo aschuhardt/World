@@ -3,7 +3,7 @@ using World.Tile;
 using World.Utility;
 
 namespace World {
-    class WorldService {
+    internal class WorldService {
 
         public ITile[,,] GenerateTiles(int width, int height, int depth,
             int seaLevel, int shoreLine, double scaleX, double scaleY, int seed) {

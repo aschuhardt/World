@@ -7,7 +7,7 @@ using Newtonsoft.Json;
 using World.Tile;
 
 namespace World.Utility {
-    static class MapSerializer {
+    internal static class MapSerializer {
         public static World DeserializeWorldMap(string filename) {
             //create a transfer object to hold info we'll use to create a World object
             WorldInfoTO worldInfo = new WorldInfoTO();
