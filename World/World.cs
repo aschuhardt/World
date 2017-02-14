@@ -3,8 +3,8 @@ using World.Tile;
 
 namespace World {
     public class World {
-        public const double DEFAULT_SCALE_X = 0.004;
-        public const double DEFAULT_SCALE_Y = 0.004;
+        public const float DEFAULT_SCALE_X = 0.004f;
+        public const float DEFAULT_SCALE_Y = 0.004f;
 
         public string Name { get; set; }
         public int Width { get; set; }
@@ -12,8 +12,8 @@ namespace World {
         public int Depth { get; set; }
         public int SeaLevel { get; set; }
         public int ShoreLine { get; set; }
-        public double ScaleX { get; set; }
-        public double ScaleY { get; set; }
+        public float ScaleX { get; set; }
+        public float ScaleY { get; set; }
         public int Seed { get; set; }
         
         public ITile[,,] Tiles { get; private set; }

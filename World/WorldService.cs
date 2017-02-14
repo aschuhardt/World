@@ -1,12 +1,11 @@
-﻿using System.Threading.Tasks;
-using World.Tile;
+﻿using World.Tile;
 using World.Utility;
 
 namespace World {
     internal class WorldService {
 
         public ITile[,,] GenerateTiles(int width, int height, int depth,
-            int seaLevel, int shoreLine, double scaleX, double scaleY, int seed) {
+            int seaLevel, int shoreLine, float scaleX, float scaleY, int seed) {
             var gen = new LandscapeGenerator(width, height, depth, seaLevel,
                                              shoreLine, scaleX, scaleY, seed);
             return gen.GenerateTiles();

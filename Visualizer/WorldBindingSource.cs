@@ -50,12 +50,12 @@ namespace Visualizer {
             set { _backingData.ShoreLine = value; }
         }
 
-        public double ScaleX {
+        public float ScaleX {
             get { return _backingData.ScaleX; }
             set { _backingData.ScaleX = value; }
         }
 
-        public double ScaleY {
+        public float ScaleY {
             get { return _backingData.ScaleY; }
             set { _backingData.ScaleY = value; }
         }

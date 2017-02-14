@@ -1,6 +1,5 @@
-﻿using SharpNoise.Modules;
-using System.Threading.Tasks;
-using World.Tile;
+﻿using World.Tile;
+using LibNoise.Primitive;
 
 namespace World.Utility {
     internal class LandscapeGenerator {
@@ -10,12 +9,12 @@ namespace World.Utility {
         public int Depth { get; private set; }
         public int SeaLevel { get; private set; }
         public int ShoreLine { get; private set; }
-        public double ScaleX { get; private set; }
-        public double ScaleY { get; private set; }
+        public float ScaleX { get; private set; }
+        public float ScaleY { get; private set; }
         public int Seed { get; private set; }
 
         public LandscapeGenerator(int width, int height, int depth, 
-            int seaLevel, int shoreLine, double scaleX, double scaleY, int seed) {
+            int seaLevel, int shoreLine, float scaleX, float scaleY, int seed) {
             this.Width = width;
             this.Height = height;
             this.Depth = depth;
@@ -34,7 +33,7 @@ namespace World.Utility {
             double[,] landscapePlane = this.BuildHeightMap();
 
             for (int x = 0; x < this.Width; x++) {
-                Parallel.For(0, this.Height, (y) => {
+                for (int y = 0; y < this.Height; y++) { 
                     for (int z = 0; z < this.Depth; z++) {
                         double landscapeElevation = landscapePlane[x, y];
                         if (z > landscapeElevation) {
@@ -57,31 +56,34 @@ namespace World.Utility {
                             }
                         }
                     }
-                });
+                }
             }
             return output;
         }
 
         private double[,] BuildHeightMap() {
             double halfDepth = (this.Depth / 2);
-            var c = new Cache() {
-                Source0 = new Blend() {
-                    Source0 = new Perlin() {
-                        Seed = this.Seed
-                    },
-                    Source1 = new Perlin() {
-                        Seed = -this.Seed
-                    },
-                    Control = new RidgedMulti() {
-                        Seed = this.Seed
-                    }
-                }
-            };
+            //RIP SharpNoise you were so nice but don't support .NET 3.5
+            //var c = new Cache() {
+            //    Source0 = new Blend() {
+            //        Source0 = new Perlin() {
+            //            Seed = this.Seed
+            //        },
+            //        Source1 = new Perlin() {
+            //            Seed = -this.Seed
+            //        },
+            //        Control = new RidgedMulti() {
+            //            Seed = this.Seed
+            //        }
+            //    }
+            //};
+
+            ImprovedPerlin perlin = new ImprovedPerlin(this.Seed, LibNoise.NoiseQuality.Standard);
 
             double[,] landscapePlane = new double[this.Width, this.Height];
             for (int x = 0; x < this.Width; x++) {
                 for (int y = 0; y < this.Height; y++) {
-                    landscapePlane[x, y] = (c.GetValue(x * this.ScaleX, y * this.ScaleY, 0.1) * halfDepth) + halfDepth;
+                    landscapePlane[x, y] = (perlin.GetValue(x * this.ScaleX, y * this.ScaleY, 0.1f) * halfDepth) + halfDepth;
                 }
             }
             return landscapePlane;

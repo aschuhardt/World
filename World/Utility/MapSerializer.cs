@@ -65,10 +65,10 @@ namespace World.Utility {
                             if (rdr.TokenType == JsonToken.Float) {
                                 switch (currentProperty) {
                                     case "ScaleX":
-                                        worldInfo.ScaleX = double.Parse(rdr.Value.ToString());
+                                        worldInfo.ScaleX = float.Parse(rdr.Value.ToString());
                                         break;
                                     case "ScaleY":
-                                        worldInfo.ScaleY = double.Parse(rdr.Value.ToString());
+                                        worldInfo.ScaleY = float.Parse(rdr.Value.ToString());
                                         break;
                                     default:
                                         break;
@@ -146,8 +146,8 @@ namespace World.Utility {
             public int Depth { get; set; }
             public int SeaLevel { get; set; }
             public int ShoreLine { get; set; }
-            public double ScaleX { get; set; }
-            public double ScaleY { get; set; }
+            public float ScaleX { get; set; }
+            public float ScaleY { get; set; }
             public int Seed { get; set; }
             public Stack<ITile> Tiles { get; set; }
 
