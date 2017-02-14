@@ -4,10 +4,9 @@ using World.Utility;
 namespace World {
     internal class WorldService {
 
-        public ITile[,,] GenerateTiles(int width, int height, int depth,
-            int seaLevel, int shoreLine, float scaleX, float scaleY, int seed) {
-            var gen = new LandscapeGenerator(width, height, depth, seaLevel,
-                                             shoreLine, scaleX, scaleY, seed);
+        public ITile[,,] GenerateTiles(World world) {
+
+            var gen = new LandscapeGenerator(world);
             return gen.GenerateTiles();
         }
 

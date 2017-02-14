@@ -17,6 +17,9 @@ namespace World {
         public float ScaleY { get; set; }
         public int Seed { get; set; }
 
+        public int OffsetX { get; private set; }
+        public int OffsetY { get; private set; }
+
         public bool HasGeneratedTiles { get; set; }
 
         public ITile[,,] Tiles { get; private set; }
@@ -44,6 +47,8 @@ namespace World {
             this.ScaleX = DEFAULT_SCALE_X;
             this.ScaleY = DEFAULT_SCALE_Y;
             this.Seed = Convert.ToInt32(DateTime.Now.Ticks % Int32.MaxValue);
+            this.OffsetX = 0;
+            this.OffsetY = 0;
 
             this.HasGeneratedTiles = false;
 
@@ -83,9 +88,7 @@ namespace World {
 
         public void GenerateTiles() {
             this.HasGeneratedTiles = true;
-            this.Tiles = new WorldService().GenerateTiles(this.Width, this.Height, this.Depth,
-                                                          this.SeaLevel, this.ShoreLine, this.ScaleX,
-                                                          this.ScaleY, this.Seed);
+            this.Tiles = new WorldService().GenerateTiles(this);
         }
 
         public void ClearTiles() {
