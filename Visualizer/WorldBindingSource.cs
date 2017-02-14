@@ -95,6 +95,22 @@ namespace Visualizer {
             }
         }
 
+        public int OffsetX {
+            get { return _backingData.OffsetX; }
+            set {
+                _backingData.OffsetX = value;
+                _isDirty = true;
+            }
+        }
+
+        public int OffsetY {
+            get { return _backingData.OffsetY; }
+            set {
+                _backingData.OffsetY = value;
+                _isDirty = true;
+            }
+        }
+
         public WorldMapRenderer.RenderStyles ImageRenderStyle { get; set; }
         public bool OccludeWater { get; set; }
 

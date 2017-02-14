@@ -2,6 +2,7 @@
 using LibNoise.Primitive;
 using LibNoise.Filter;
 using LibNoise.Combiner;
+using LibNoise.Transformer;
 
 namespace World.Utility {
     internal class LandscapeGenerator {
@@ -54,6 +55,8 @@ namespace World.Utility {
             MultiFractal mf = new MultiFractal();
             mf.Primitive2D = perlin;
             mf.Primitive3D = perlin;
+
+            //TranslatePoint tp = new TranslatePoint(mf, _world.OffsetX, _world.OffsetY, 0.0f);
             
             double[,] landscapePlane = new double[_world.Width, _world.Height];
             for (int x = 0; x < _world.Width; x++) {
@@ -61,6 +64,7 @@ namespace World.Utility {
                     landscapePlane[x, y] = mf.GetValue((x * _world.ScaleX) + _world.OffsetX, (y * _world.ScaleY) + _world.OffsetY, 0.1f) * halfDepth;
                 }
             }
+
             return landscapePlane;
         }
     }

@@ -59,6 +59,10 @@
             this.nudScaleX = new System.Windows.Forms.NumericUpDown();
             this.groupBox2 = new System.Windows.Forms.GroupBox();
             this.button1 = new System.Windows.Forms.Button();
+            this.lbloffsetx = new System.Windows.Forms.Label();
+            this.nudOffsetX = new System.Windows.Forms.NumericUpDown();
+            this.nudOffsetY = new System.Windows.Forms.NumericUpDown();
+            this.label10 = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)(this.pbRender)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.nudWidth)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.nudShoreLine)).BeginInit();
@@ -70,6 +74,8 @@
             ((System.ComponentModel.ISupportInitialize)(this.nudScaleY)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.nudScaleX)).BeginInit();
             this.groupBox2.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.nudOffsetX)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.nudOffsetY)).BeginInit();
             this.SuspendLayout();
             // 
             // pbRender
@@ -244,7 +250,7 @@
             // 
             // btnExport
             // 
-            this.btnExport.Location = new System.Drawing.Point(518, 198);
+            this.btnExport.Location = new System.Drawing.Point(518, 245);
             this.btnExport.Name = "btnExport";
             this.btnExport.Size = new System.Drawing.Size(75, 23);
             this.btnExport.TabIndex = 26;
@@ -280,7 +286,7 @@
             // cbOccludeWater
             // 
             this.cbOccludeWater.AutoSize = true;
-            this.cbOccludeWater.Location = new System.Drawing.Point(9, 146);
+            this.cbOccludeWater.Location = new System.Drawing.Point(9, 198);
             this.cbOccludeWater.Name = "cbOccludeWater";
             this.cbOccludeWater.Size = new System.Drawing.Size(98, 17);
             this.cbOccludeWater.TabIndex = 29;
@@ -290,8 +296,12 @@
             // groupBox1
             // 
             this.groupBox1.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
+            this.groupBox1.Controls.Add(this.lbloffsetx);
             this.groupBox1.Controls.Add(this.btnRandomSeed);
+            this.groupBox1.Controls.Add(this.nudOffsetX);
+            this.groupBox1.Controls.Add(this.nudOffsetY);
             this.groupBox1.Controls.Add(this.label6);
+            this.groupBox1.Controls.Add(this.label10);
             this.groupBox1.Controls.Add(this.nudSeed);
             this.groupBox1.Controls.Add(this.label7);
             this.groupBox1.Controls.Add(this.nudScaleY);
@@ -302,7 +312,7 @@
             this.groupBox1.Controls.Add(this.cboStyle);
             this.groupBox1.Location = new System.Drawing.Point(439, 12);
             this.groupBox1.Name = "groupBox1";
-            this.groupBox1.Size = new System.Drawing.Size(154, 180);
+            this.groupBox1.Size = new System.Drawing.Size(154, 227);
             this.groupBox1.TabIndex = 30;
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "Landscape";
@@ -413,13 +423,65 @@
             // 
             // button1
             // 
-            this.button1.Location = new System.Drawing.Point(277, 227);
+            this.button1.Location = new System.Drawing.Point(274, 227);
             this.button1.Name = "button1";
             this.button1.Size = new System.Drawing.Size(156, 23);
             this.button1.TabIndex = 32;
             this.button1.Text = "Generate + Random Seed";
             this.button1.UseVisualStyleBackColor = true;
             this.button1.Click += new System.EventHandler(this.button1_Click);
+            // 
+            // lbloffsetx
+            // 
+            this.lbloffsetx.AutoSize = true;
+            this.lbloffsetx.Location = new System.Drawing.Point(6, 150);
+            this.lbloffsetx.Name = "lbloffsetx";
+            this.lbloffsetx.Size = new System.Drawing.Size(45, 13);
+            this.lbloffsetx.TabIndex = 15;
+            this.lbloffsetx.Text = "OffsetX:";
+            // 
+            // nudOffsetX
+            // 
+            this.nudOffsetX.Increment = new decimal(new int[] {
+            64,
+            0,
+            0,
+            0});
+            this.nudOffsetX.Location = new System.Drawing.Point(69, 146);
+            this.nudOffsetX.Maximum = new decimal(new int[] {
+            4096,
+            0,
+            0,
+            0});
+            this.nudOffsetX.Name = "nudOffsetX";
+            this.nudOffsetX.Size = new System.Drawing.Size(73, 20);
+            this.nudOffsetX.TabIndex = 14;
+            // 
+            // nudOffsetY
+            // 
+            this.nudOffsetY.Increment = new decimal(new int[] {
+            64,
+            0,
+            0,
+            0});
+            this.nudOffsetY.Location = new System.Drawing.Point(69, 172);
+            this.nudOffsetY.Maximum = new decimal(new int[] {
+            4096,
+            0,
+            0,
+            0});
+            this.nudOffsetY.Name = "nudOffsetY";
+            this.nudOffsetY.Size = new System.Drawing.Size(73, 20);
+            this.nudOffsetY.TabIndex = 16;
+            // 
+            // label10
+            // 
+            this.label10.AutoSize = true;
+            this.label10.Location = new System.Drawing.Point(6, 176);
+            this.label10.Name = "label10";
+            this.label10.Size = new System.Drawing.Size(45, 13);
+            this.label10.TabIndex = 17;
+            this.label10.Text = "OffsetY:";
             // 
             // Form1
             // 
@@ -454,6 +516,8 @@
             ((System.ComponentModel.ISupportInitialize)(this.nudScaleX)).EndInit();
             this.groupBox2.ResumeLayout(false);
             this.groupBox2.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.nudOffsetX)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.nudOffsetY)).EndInit();
             this.ResumeLayout(false);
 
         }
@@ -490,6 +554,10 @@
         private System.Windows.Forms.Label label5;
         private System.Windows.Forms.NumericUpDown nudScaleX;
         private System.Windows.Forms.Button button1;
+        private System.Windows.Forms.Label lbloffsetx;
+        private System.Windows.Forms.NumericUpDown nudOffsetX;
+        private System.Windows.Forms.NumericUpDown nudOffsetY;
+        private System.Windows.Forms.Label label10;
     }
 }
 

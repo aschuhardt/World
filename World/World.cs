@@ -17,8 +17,8 @@ namespace World {
         public float ScaleY { get; set; }
         public int Seed { get; set; }
 
-        public int OffsetX { get; private set; }
-        public int OffsetY { get; private set; }
+        public int OffsetX { get; set; }
+        public int OffsetY { get; set; }
 
         public bool HasGeneratedTiles { get; set; }
 
