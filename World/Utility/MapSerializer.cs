@@ -5,10 +5,9 @@ using System.Text;
 using System.IO;
 using Newtonsoft.Json;
 using World.Tile;
-using System.Collections;
 
-namespace World {
-    class MapSerializer {
+namespace World.Utility {
+    static class MapSerializer {
         public static World DeserializeWorldMap(string filename) {
             //create a transfer object to hold info we'll use to create a World object
             WorldInfoTO worldInfo = new WorldInfoTO();

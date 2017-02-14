@@ -1,11 +1,5 @@
 using System;
 using World.Tile;
-using Newtonsoft.Json;
-using System.Collections.Generic;
-using System.Diagnostics;
-using SharpNoise;
-using SharpNoise.Modules;
-using System.Threading.Tasks;
 
 namespace World {
     public class World {
@@ -21,24 +15,12 @@ namespace World {
         public double ScaleX { get; set; }
         public double ScaleY { get; set; }
         public int Seed { get; set; }
-
-        [JsonIgnore]
+        
         public ITile[,,] Tiles { get; private set; }
 
         public ITile[] SerializedTileArray {
             get {
-                List<ITile> tArr = new List<ITile>();
-                for (int x = 0; x < this.Width; x++) {
-                    for (int y = 0; y < this.Height; y++) {
-                        for (int z = 0; z < this.Depth; z++) {
-                            if (this.Tiles[x, y, z] != null) {
-                                ITile t = this.Tiles[x, y, z];
-                                tArr.Add(this.Tiles[x, y, z]);
-                            }
-                        }
-                    }
-                }
-                return tArr.ToArray();
+                return new WorldService().FlattenTileArray(this.Tiles);
             }
             set {
                 foreach (ITile t in value) {
@@ -83,129 +65,26 @@ namespace World {
         }
 
         public void Save(string outputDirectory) {
-            Stopwatch sw = new Stopwatch();
-            sw.Start();
-
-            try {
-                MapSerializer.SerializeWorldMap(this, outputDirectory);
-            } catch (Exception ex) {
-                Console.WriteLine($"Error while serializing map object: {ex.Message}; {ex.StackTrace}");
-                throw;
-            }
-
-            sw.Stop();
-            Console.WriteLine("Serialization time: {0} ticks, {1} ms.", sw.ElapsedTicks, sw.ElapsedMilliseconds);
+            new WorldService().SaveWorld(this, outputDirectory);
         }
 
         public static World LoadFromFile(string filename) {
-            Stopwatch sw = new Stopwatch();
-            sw.Start();
-
-            World loaded;
-
-            try {
-                loaded = MapSerializer.DeserializeWorldMap(filename);
-            } catch (Exception ex) {
-                Console.WriteLine($"Error while deserializing map object: {ex.Message}; {ex.StackTrace}");
-                throw;
-            }
-
-            sw.Stop();
-            Console.WriteLine("Deserialization time: {0} ticks, {1} ms.", sw.ElapsedTicks, sw.ElapsedMilliseconds);
-
-            return loaded;
+            return new WorldService().LoadWorld(filename);
         }
 
-        internal int FillNullTilesWithAir() {
-            Stopwatch sw = new Stopwatch();
-            sw.Start();
-
-            int count = 0;
-            for (int x = 0; x < this.Width; x++) {
-                for (int y = 0; y < this.Height; y++) {
-                    for (int z = 0; z < this.Depth; z++) {
-                        if (this.Tiles[x, y, z] == null) {
-                            count++;
-                            ITile t = new AirTile(x, y, z);
-                            this.SetTileAtLocation(t, t.X, t.Y, t.Z);
-                        }
-                    }
-                }
-            }
-            Console.WriteLine($"{count} null tiles replaced with air.");
-
-            sw.Stop();
-            Console.WriteLine("Air-fill time: {0} ticks, {1} ms.", sw.ElapsedTicks, sw.ElapsedMilliseconds);
-
-            return count;
+        internal void FillNullTilesWithAir() {
+            new WorldService().FillNullTilesWithAir(this.Tiles);
         }
 
         public void GenerateTiles() {
-            Stopwatch sw = new Stopwatch();
-            sw.Start();
-            
-            //reinitialize array
-            this.Tiles = new ITile[this.Width, this.Height, this.Depth];
-
-            //generate a 2D plane representing the contours of the landscape
-            double[,] landscapePlane = this.GenerateLandscapePlane(this.ScaleX, this.ScaleY, this.Seed);
-
-            for (int x = 0; x < this.Width; x++) {
-                Parallel.For(0, this.Height, (y) => {
-                    for (int z = 0; z < this.Depth; z++) {
-                        double landscapeElevation = landscapePlane[x, y];
-                        if (z > landscapeElevation) {
-
-                            //if the current Z value falls above the surface of the landscape plane,
-                            //  then consider it "sky" and create an air tile here.
-                            if (z > this.SeaLevel) {
-                                this.Tiles[x, y, z] = new AirTile(x, y, z);
-                            } else {
-                                this.Tiles[x, y, z] = new WaterTile(x, y, z);
-                            }
-                        } else {
-
-                            //otherwise, we are "in" the landscape, so set tiles to either sand
-                            //  (if at or below shoreline), or grass (if above shoreline)
-                            if (z <= this.ShoreLine) {
-                                this.Tiles[x, y, z] = new SandTile(x, y, z);
-                            } else {
-                                this.Tiles[x, y, z] = new GrassTile(x, y, z);
-                            }
-                        }
-                    }
-                });
-            }
-
-            sw.Stop();
-            Console.WriteLine("Landscape generation time: {0} ticks, {1} ms.", sw.ElapsedTicks, sw.ElapsedMilliseconds);
+            this.Tiles = new WorldService().GenerateTiles(this.Width, this.Height, this.Depth,
+                                                          this.SeaLevel, this.ShoreLine, this.ScaleX,
+                                                          this.ScaleY, this.Seed);
         }
 
         public void ClearTiles() {
             Tiles = null;
             GC.Collect();
-        }
-
-        private double[,] GenerateLandscapePlane(double scaleX, double scaleY, int seed) {
-            Stopwatch sw = new Stopwatch();
-            sw.Start();
-
-            Perlin p = new Perlin();
-            p.Seed = seed;
-            
-            double halfDepth = (this.Depth / 2);
-
-            double[,] landscapePlane = new double[this.Width, this.Height];
-            for (int x = 0; x < this.Width; x++) {
-                for (int y = 0; y < this.Height; y++) {
-                    landscapePlane[x, y] = (p.GetValue(x * scaleX, y * scaleY, 0.1) * halfDepth) + halfDepth;
-                }
-            }
-
-            sw.Stop();
-            Console.WriteLine("Plane calculation time: {0} ticks, {1} ms.", sw.ElapsedTicks, sw.ElapsedMilliseconds);
-
-            return landscapePlane;
         }
     }
 }
