@@ -2,6 +2,7 @@ using System;
 using World.Tile;
 
 namespace World {
+    [Serializable]
     public class World {
         public const float DEFAULT_SCALE_X = 0.004f;
         public const float DEFAULT_SCALE_Y = 0.004f;
@@ -15,7 +16,9 @@ namespace World {
         public float ScaleX { get; set; }
         public float ScaleY { get; set; }
         public int Seed { get; set; }
-        
+
+        public bool HasGeneratedTiles { get; set; }
+
         public ITile[,,] Tiles { get; private set; }
 
         public ITile[] SerializedTileArray {
@@ -41,7 +44,9 @@ namespace World {
             this.ScaleX = DEFAULT_SCALE_X;
             this.ScaleY = DEFAULT_SCALE_Y;
             this.Seed = Convert.ToInt32(DateTime.Now.Ticks % Int32.MaxValue);
-            
+
+            this.HasGeneratedTiles = false;
+
             if (generate) this.GenerateTiles();
         }
 
@@ -77,12 +82,14 @@ namespace World {
         }
 
         public void GenerateTiles() {
+            this.HasGeneratedTiles = true;
             this.Tiles = new WorldService().GenerateTiles(this.Width, this.Height, this.Depth,
                                                           this.SeaLevel, this.ShoreLine, this.ScaleX,
                                                           this.ScaleY, this.Seed);
         }
 
         public void ClearTiles() {
+            this.HasGeneratedTiles = false;
             Tiles = null;
             GC.Collect();
         }

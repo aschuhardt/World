@@ -19,67 +19,100 @@ namespace Visualizer {
         private const bool DEFAULT_VALUE_OCCLUDE_WATER = false;
 
         private World.World _backingData;
+
+        private bool _isDirty;
+        private Bitmap _cachedImage;
         
         public string Name {
             get { return _backingData.Name; }
-            set { _backingData.Name = value; }
+            set {
+                _backingData.Name = value;
+                _isDirty = true;
+            }
         }
 
         public int Width {
             get { return _backingData.Width; }
-            set { _backingData.Width = value; }
+            set {
+                _backingData.Width = value;
+                _isDirty = true;
+            }
         }
 
         public int Height {
             get { return _backingData.Height; }
-            set { _backingData.Height = value; }
+            set {
+                _backingData.Height = value;
+                _isDirty = true;
+            }
         }
 
         public int Depth {
             get { return _backingData.Depth; }
-            set { _backingData.Depth = value; }
+            set {
+                _backingData.Depth = value;
+                _isDirty = true;
+            }
         }
 
         public int SeaLevel {
             get { return _backingData.SeaLevel; }
-            set { _backingData.SeaLevel = value; }
+            set {
+                _backingData.SeaLevel = value;
+                _isDirty = true;
+            }
         }
 
         public int ShoreLine {
             get { return _backingData.ShoreLine; }
-            set { _backingData.ShoreLine = value; }
+            set {
+                _backingData.ShoreLine = value;
+                _isDirty = true;
+            }
         }
 
         public float ScaleX {
             get { return _backingData.ScaleX; }
-            set { _backingData.ScaleX = value; }
+            set {
+                _backingData.ScaleX = value;
+                _isDirty = true;
+            }
         }
 
         public float ScaleY {
             get { return _backingData.ScaleY; }
-            set { _backingData.ScaleY = value; }
+            set {
+                _backingData.ScaleY = value;
+                _isDirty = true;
+            }
         }
 
         public int Seed {
             get { return _backingData.Seed; }
-            set { _backingData.Seed = value; }
+            set {
+                _backingData.Seed = value;
+                _isDirty = true;
+            }
         }
 
         public WorldMapRenderer.RenderStyles ImageRenderStyle { get; set; }
         public bool OccludeWater { get; set; }
+
         public Image RenderedImage {
             get {
-                _backingData.GenerateTiles();
-                Bitmap bmp = WorldMapRenderer.RenderTopDownMap(_backingData, this.ImageRenderStyle, this.OccludeWater);
-                _backingData.ClearTiles();
-                return bmp;
+                if (_isDirty) {
+                    _isDirty = false;
+                    _backingData.GenerateTiles();
+                    Bitmap bmp = WorldMapRenderer.RenderTopDownMap(_backingData, this.ImageRenderStyle, this.OccludeWater);
+                    _backingData.ClearTiles();
+                    _cachedImage = bmp;
+                }
+                return _cachedImage;
             }
         }
 
         public void Save(string path) {
-            _backingData.GenerateTiles();
             _backingData.Save(path);
-            _backingData.ClearTiles();
         }
 
         public World.World Load(string path) {
@@ -89,11 +122,13 @@ namespace Visualizer {
         public WorldBindingSource() {
             _backingData = new World.World(DEFAULT_VALUE_WIDTH, DEFAULT_VALUE_HEIGHT, DEFAULT_VALUE_DEPTH, DEFAULT_VALUE_SEALEVEL, DEFAULT_VALUE_SHORELINE, "World", false);
             setDefaultRenderParams();
+            _isDirty = true;
         }
 
         public WorldBindingSource(World.World w) {
             this._backingData = w;
             setDefaultRenderParams();
+            _isDirty = true;
         }
 
         private void setDefaultRenderParams() {
