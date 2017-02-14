@@ -13,11 +13,9 @@ namespace World.Tile {
 
     public interface ITile {
         TileTypes TileType { get; }
-        IList<IStaticEntity> StaticEntities { get; }
         int X { get; set; }
         int Y { get; set; }
         int Z { get; set; }
-        [JsonIgnore]
         string Serialized { get; }
     }
 }

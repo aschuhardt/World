@@ -45,7 +45,6 @@
     <Reference Include="System" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Utility\MapSerializer.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Utility\LandscapeDAO.cs" />
     <Compile Include="Utility\LandscapeGenerator.cs" />

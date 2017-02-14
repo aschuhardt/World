@@ -124,7 +124,7 @@ namespace World.Utility {
 
                 //filter out tiles that are empty air
                 List<ITile> nonEmptyTiles = tiles.Where((t) => {
-                    return t.TileType != TileTypes.Air || t.StaticEntities.Count > 0;
+                    return t.TileType != TileTypes.Air /*|| t.StaticEntities.Count > 0*/;
                 }).ToList();
 
                 int index = 0;

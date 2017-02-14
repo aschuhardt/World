@@ -6,7 +6,6 @@ using World.StaticEntity;
 namespace World.Tile {
     public abstract class TileBase : ITile {
         private TileTypes _tileType;
-        private IList<IStaticEntity> _staticEntities;
         private int _x;
         private int _y;
         private int _z;
@@ -15,12 +14,6 @@ namespace World.Tile {
         public TileTypes TileType {
             get {
                 return _tileType;
-            }
-        }
-
-        public System.Collections.Generic.IList<global::World.StaticEntity.IStaticEntity> StaticEntities {
-            get {
-                return _staticEntities;
             }
         }
 
@@ -70,7 +63,6 @@ namespace World.Tile {
             _y = y;
             _z = z;
             _tileType = tileType;
-            _staticEntities = new List<IStaticEntity>();
         }
 
         public TileBase(TileTypes t) {
@@ -78,7 +70,6 @@ namespace World.Tile {
             _y = 0;
             _z = 0;
             _tileType = t;
-            _staticEntities = new List<IStaticEntity>();
         }
     }
 }
