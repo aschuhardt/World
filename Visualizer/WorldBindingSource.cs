@@ -128,6 +128,7 @@ namespace Visualizer {
         }
 
         public void Save(string path) {
+            if (_isDirty || !_backingData.HasGeneratedTiles) _backingData.GenerateTiles();
             _backingData.Save(path);
         }
 

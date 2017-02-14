@@ -5,6 +5,8 @@ using World.StaticEntity;
 
 namespace World.Tile {
     public abstract class TileBase : ITile {
+        private const ushort SERIAL_END_DELIMITER = 65535;
+
         private TileTypes _tileType;
         private int _x;
         private int _y;
@@ -42,19 +44,6 @@ namespace World.Tile {
             }
             set {
                 _z = value;
-            }
-        }
-
-        public virtual string Serialized {
-            get {
-                var sb = new StringBuilder();
-                sb.Append("{ ");
-                sb.AppendFormat("\"TileType\": {0},", (int)this.TileType);
-                sb.AppendFormat("\"X\": {0},", (int)this.X);
-                sb.AppendFormat("\"Y\": {0},", (int)this.Y);
-                sb.AppendFormat("\"Z\": {0}", (int)this.Z);
-                sb.Append(" }");
-                return sb.ToString();
             }
         }
 

@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using World.StaticEntity;
 
 namespace World.Tile {
-    public enum TileTypes {
+    public enum TileTypes : ushort {
         Air,
         Water,
         Grass,
@@ -17,7 +17,6 @@ namespace World.Tile {
         int Y { get; set; }
         int Z { get; set; }
         bool ShouldLoad { get; set; }
-        string Serialized { get; }
     }
 }
 

@@ -24,15 +24,9 @@ namespace World {
 
         public ITile[,,] Tiles { get; private set; }
 
-        public ITile[] SerializedTileArray {
+        public ITile[] FlattenedTileArray {
             get {
                 return new WorldService().FlattenTileArray(this.Tiles);
-            }
-            set {
-                foreach (ITile t in value) {
-                    this.SetTileAtLocation(t, t.X, t.Y, t.Z);
-                }
-                this.FillNullTilesWithAir();
             }
         }
 
@@ -81,11 +75,7 @@ namespace World {
         public static World LoadFromFile(string filename) {
             return new WorldService().LoadWorld(filename);
         }
-
-        internal void FillNullTilesWithAir() {
-            new WorldService().FillNullTilesWithAir(this.Tiles);
-        }
-
+        
         public void GenerateTiles() {
             this.HasGeneratedTiles = true;
             this.Tiles = new WorldService().GenerateTiles(this);

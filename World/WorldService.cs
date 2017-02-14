@@ -11,7 +11,9 @@ namespace World {
         }
 
         public World LoadWorld(string path) {
-            return new LandscapeDAO().Load(path);
+            World w = new LandscapeDAO().Load(path);
+            TileArrayManipulator.InflateNullTiles(w.Tiles);
+            return w;
         }
 
         public void SaveWorld(World w, string path) {
